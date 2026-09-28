@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Remembering Micah Bielert</title>
-<meta name="description" content="Micah Bielert, June 28, 1986 – March 8, 2025. Remembered by his family.">
+<meta name="description" content="Micah Bielert, June 28, 1986 – March 8, 2025. Remembered by his family. Sign the guestbook with a memory of your own.">
 <meta property="og:title" content="Remembering Micah Bielert">
 <meta property="og:description" content="June 28, 1986 – March 8, 2025. Remembered by his family.">
 <meta property="og:image" content="https://micah-bielert.netlify.app/photos/76.jpg">
 <meta name="theme-color" content="#1b1a18">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231b1a18'/><text x='50' y='68' font-family='Georgia,serif' font-style='italic' font-size='56' fill='%23ece9e6' text-anchor='middle'>M</text></svg>">
 <meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231b1a18'/><text x='50' y='68' font-family='Georgia,serif' font-style='italic' font-size='56' fill='%23ece9e6' text-anchor='middle'>M</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@400;600&display=swap">
@@ -22,6 +22,7 @@
     --ground: #1b1a18;       /* the charcoal of his book's cover */
     --ground-2: #252320;
     --paper: #ece9e6;        /* his book's pages */
+    --card: #f5f3f0;
     --ink: #1f1d1a;
     --ink-soft: #3d3934;
     --muted: #6b645a;
@@ -30,6 +31,8 @@
     --on-dark-soft: #a39c90;
     --line-dark: #3a3732;
     --focus: #8a6f3e;
+    --ok: #3f5a3a;
+    --warn: #8a3f2c;
     --display: "Playfair Display", "Times New Roman", serif;
     --text: "EB Garamond", Garamond, Georgia, serif;
     --ui: "Josefin Sans", Futura, "Century Gothic", system-ui, sans-serif;
@@ -39,13 +42,13 @@
   html { background: var(--ground); scroll-padding-top: 64px; }
   body { margin: 0; background: var(--ground); color: var(--on-dark); font-family: var(--text); font-size: 20px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   [hidden] { display: none !important; }
-  img, video { max-width: 100%; }
+  img, video, iframe { max-width: 100%; }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-  button { font: inherit; color: inherit; }
+  button, input, textarea { font: inherit; color: inherit; }
 
   /* the opening, on the charcoal */
-  .hero { text-align: center; padding: calc(56px + env(safe-area-inset-top, 0px)) 20px 40px; }
+  .hero { text-align: center; padding: calc(56px + env(safe-area-inset-top, 0px)) 20px 44px; }
   .frame { display: inline-block; padding: 10px; border: 1px solid var(--line-dark); }
   .frame img { display: block; width: min(280px, 64vw); aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.05); }
   .in-memoriam { margin: 0 0 22px; font: 400 13px/1 var(--ui); letter-spacing: 0.32em; text-transform: uppercase; color: var(--on-dark-soft); }
@@ -55,6 +58,14 @@
   .epigraph { max-width: 30em; margin: 34px auto 0; }
   .epigraph p { margin: 0; font: italic 400 clamp(22px, 3.4vw, 28px)/1.4 var(--display); color: var(--on-dark); text-wrap: balance; }
   .epigraph cite { display: block; margin-top: 10px; font: 400 13px/1.4 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--on-dark-soft); }
+  .hero .sign { margin-top: 30px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); text-decoration: none; cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.16em; text-transform: uppercase; }
+  .btn:hover { background: var(--ink-soft); }
+  .btn.light { background: transparent; color: var(--on-dark); border-color: var(--on-dark-soft); }
+  .btn.light:hover { background: var(--ground-2); }
+  .btn.line { background: transparent; color: var(--ink); }
+  .btn.line:hover { background: var(--card); }
+  .btn[disabled] { opacity: 0.55; cursor: default; }
 
   /* the section row */
   .nav {
@@ -67,40 +78,80 @@
   .nav a:hover { color: var(--on-dark); }
 
   /* the pages: one long warm gray sheet */
-  .sheet { max-width: 940px; margin: 40px auto 0; padding: 8px clamp(20px, 6vw, 76px) 72px; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); }
+  .sheet { max-width: 960px; margin: 40px auto 0; padding: 8px clamp(20px, 6vw, 76px) 72px; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); }
   section { padding-top: 64px; }
   h2 { margin: 0; text-align: center; font: italic 500 clamp(30px, 5vw, 40px)/1.15 var(--display); color: var(--ink); text-wrap: balance; }
   h2 + .rule { width: 64px; height: 1px; margin: 18px auto 0; background: var(--ink); }
-  .intro { max-width: 34em; margin: 18px auto 0; text-align: center; font-style: italic; color: var(--muted); }
+  .intro { max-width: 32em; margin: 18px auto 0; text-align: center; font-style: italic; color: var(--muted); }
+  .label { font: 400 13px/1.4 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
 
-  .tribute { max-width: 36em; margin: 48px auto 0; }
-  .tribute + .tribute { padding-top: 48px; border-top: 1px solid var(--rule); }
-  .t-name { margin: 0; font: italic 500 30px/1.2 var(--display); color: var(--ink); }
-  .t-rel { margin: 6px 0 18px; font: 400 13px/1.4 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-  .tribute p { margin: 0 0 1em; color: var(--ink-soft); overflow-wrap: anywhere; }
-  .tribute p:last-child { margin-bottom: 0; }
-
-  .book { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; align-items: center; margin-top: 40px; }
-  .book-cover { display: block; box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.55); }
-  .book-cover img { display: block; width: 100%; }
-  .book h3 { margin: 0; font: italic 500 30px/1.2 var(--display); }
-  .book p { margin: 12px 0 0; color: var(--ink-soft); }
-  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; margin-top: 22px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); text-decoration: none; cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.16em; text-transform: uppercase; }
-  .btn:hover { background: var(--ink-soft); }
-
-  .photos { columns: 3 220px; column-gap: 14px; margin-top: 40px; }
-  .ph { display: block; width: 100%; margin: 0 0 14px; padding: 0; border: 0; background: var(--ground-2); cursor: zoom-in; break-inside: avoid; }
+  /* his story: a timeline down the left, photos gathered under each part of his life */
+  .story { list-style: none; margin: 44px 0 0; padding: 0 0 0 6px; }
+  .moment { position: relative; padding: 0 0 52px 34px; border-left: 1px solid var(--rule); }
+  .moment:last-child { padding-bottom: 0; border-left-color: transparent; }
+  .moment::before { content: ""; position: absolute; left: -6px; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--paper); box-shadow: 0 0 0 1.5px var(--ink); }
+  .moment.major::before { background: var(--ink); }
+  .m-when { display: block; }
+  .m-title { margin: 4px 0 0; font: italic 500 clamp(24px, 3.6vw, 30px)/1.2 var(--display); color: var(--ink); text-wrap: balance; }
+  .m-text { margin: 8px 0 0; max-width: 34em; color: var(--ink-soft); }
+  .m-link { display: inline-block; margin-top: 10px; font-style: italic; color: var(--ink-soft); text-underline-offset: 4px; }
+  .m-link:hover { color: var(--ink); }
+  .mosaic { columns: 3 180px; column-gap: 10px; margin-top: 20px; }
+  .ph { display: block; width: 100%; margin: 0 0 10px; padding: 0; border: 0; background: var(--ground-2); cursor: zoom-in; break-inside: avoid; }
   .ph img { display: block; width: 100%; height: auto; }
+  .one { margin-top: 18px; max-width: 520px; }
+  .one .ph { margin: 0; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.5); }
+  .more { margin-top: 6px; background: none; border: 0; padding: 8px 0; min-height: 44px; cursor: pointer; font-style: italic; font-size: 19px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+  .clips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; max-width: 640px; }
+  .clips.solo { grid-template-columns: minmax(0, 220px); }
+  .clips video { display: block; width: 100%; aspect-ratio: 480 / 848; background: var(--ground); object-fit: cover; }
 
-  .videos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; margin-top: 40px; }
-  .video { margin: 0; }
-  .video video { display: block; width: 100%; aspect-ratio: 480 / 848; background: var(--ground); object-fit: cover; }
-  .video figcaption { margin-top: 8px; font-style: italic; color: var(--muted); }
+  /* his words: the book, right on the page */
+  .reader { display: block; width: 100%; height: 640px; margin-top: 36px; border: 0; background: var(--ground); box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.6); }
+  .book-line { margin: 14px 0 0; text-align: center; font-style: italic; color: var(--muted); }
+  .book-line a { text-underline-offset: 4px; }
+  .music { max-width: 34em; margin: 48px auto 0; padding-top: 34px; border-top: 1px solid var(--rule); text-align: center; }
+  .music h3 { margin: 0; font: italic 500 28px/1.2 var(--display); }
+  .music p { margin: 10px 0 0; color: var(--ink-soft); }
+  .music .btn { margin-top: 18px; }
+
+  /* the guestbook */
+  .gb-actions { margin-top: 26px; text-align: center; }
+  .entries { columns: 2 300px; column-gap: 22px; margin-top: 34px; }
+  .entry { break-inside: avoid; margin: 0 0 22px; padding: 24px 26px 20px; background: var(--card); box-shadow: 0 0 0 1px rgba(31, 29, 26, 0.08), 0 12px 24px -16px rgba(0, 0, 0, 0.35); }
+  .entry img { display: block; width: 100%; height: auto; margin: -8px 0 16px; }
+  .e-name { margin: 0; font: italic 500 25px/1.2 var(--display); color: var(--ink); overflow-wrap: anywhere; }
+  .e-meta { margin: 6px 0 0; }
+  .e-text { position: relative; margin-top: 14px; color: var(--ink-soft); overflow-wrap: anywhere; }
+  .e-text p { margin: 0 0 0.8em; white-space: pre-line; }
+  .e-text p:last-child { margin-bottom: 0; }
+  .e-text.clamped { max-height: 11.5em; overflow: hidden; }
+  .e-text.clamped::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3.2em; background: linear-gradient(transparent, var(--card)); }
+  .e-more { margin-top: 6px; padding: 8px 0 0; min-height: 40px; background: none; border: 0; cursor: pointer; font-style: italic; font-size: 18px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+
+  .sign-form { max-width: 560px; margin: 34px auto 0; padding: 28px clamp(18px, 4vw, 34px); background: var(--card); box-shadow: 0 0 0 1px rgba(31, 29, 26, 0.1); font-family: var(--ui); font-size: 17px; }
+  .sign-form h3 { margin: 0 0 18px; text-align: center; font: italic 500 28px/1.2 var(--display); }
+  .sign-form label { display: block; margin: 16px 0 6px; color: var(--muted); font-size: 15.5px; }
+  .sign-form input[type="text"], .sign-form textarea { display: block; width: 100%; min-height: 48px; padding: 10px 12px; background: #fff; border: 1px solid #8e866f; border-radius: 2px; font-family: var(--text); font-size: 19px; color: var(--ink); }
+  .sign-form textarea { min-height: 150px; resize: vertical; line-height: 1.5; }
+  .ask { margin-top: 10px; min-height: 44px; padding: 8px 12px; width: 100%; text-align: left; background: none; border: 1px dashed var(--rule); cursor: pointer; font-family: var(--text); font-size: 18px; color: var(--muted); }
+  .ask b { color: var(--ink); font-weight: 500; }
+  .photo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+  .photo-row .btn { font-size: 12.5px; }
+  .preview { display: flex; align-items: center; gap: 12px; }
+  .preview img { width: 64px; height: 64px; object-fit: cover; }
+  .preview button { background: none; border: 0; min-height: 44px; cursor: pointer; text-decoration: underline; color: var(--muted); }
+  .vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+  .vh:focus-visible + label { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .sign-form .submit { width: 100%; margin-top: 22px; }
+  .status { margin: 14px 0 0; min-height: 1.5em; text-align: center; }
+  .status.ok { color: var(--ok); } .status.warn { color: var(--warn); }
 
   .loved { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px 20px; margin: 40px auto 0; max-width: 720px; text-align: center; }
   .loved p { margin: 0; }
   .l-name { font: italic 500 24px/1.25 var(--display); color: var(--ink); }
-  .l-rel { margin-top: 4px !important; font: 400 12.5px/1.4 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .l-rel { margin-top: 4px !important; }
 
   .foot { padding: 56px 20px calc(56px + env(safe-area-inset-bottom, 0px)); text-align: center; color: var(--on-dark-soft); font-style: italic; }
   .foot a { display: inline-block; margin-top: 10px; font: 400 13px/1 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
@@ -115,19 +166,21 @@
   @media (max-width: 640px) {
     body { font-size: 19px; }
     .sheet { margin-top: 24px; }
-    .book { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-    .photos { columns: 2; column-gap: 10px; }
-    .ph { margin-bottom: 10px; }
-    .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .nav { gap: 0 15px; padding-left: 10px; padding-right: 10px; }
+    .mosaic { columns: 2; column-gap: 8px; }
+    .ph { margin-bottom: 8px; }
+    .moment { padding-left: 22px; }
+    .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .entries { columns: 1; }
+    .entry { padding: 20px 20px 16px; }
+    .nav { gap: 0 18px; padding-left: 10px; padding-right: 10px; }
     .nav a { letter-spacing: 0.12em; font-size: 12.5px; }
   }
   @media print {
     html, body, .foot { background: #fff; color: #000; }
-    .nav, .btn, .videos, .viewer, #videos { display: none !important; }
+    .nav, .btn, .clips, .viewer, .reader, .sign-form, .gb-actions, .more, .e-more, .ask { display: none !important; }
     .sheet { box-shadow: none; max-width: none; }
-    .frame img { filter: grayscale(1); }
     .hero .name, .hero .epigraph p { color: #000; }
+    .e-text.clamped { max-height: none; } .e-text.clamped::after { display: none; }
   }
 </style>
 </head>
@@ -140,46 +193,59 @@
   <p class="years" id="years"></p>
   <p class="tagline" id="tagline"></p>
   <blockquote class="epigraph" id="epigraph" hidden><p></p><cite></cite></blockquote>
+  <div class="sign"><a class="btn light" href="#guestbook" data-sign>Sign the guestbook</a></div>
 </header>
 
 <nav class="nav" aria-label="Sections">
-  <a href="#tributes">Tributes</a>
-  <a href="#book">His book</a>
-  <a href="#photos">Photos</a>
-  <a href="#videos">Videos</a>
+  <a href="#story">His story</a>
+  <a href="#book">His words</a>
+  <a href="#guestbook">Guestbook</a>
   <a href="#loved">Family</a>
 </nav>
 
 <main class="sheet">
-  <section id="tributes" aria-labelledby="h-tributes">
-    <h2 id="h-tributes">In their words</h2><div class="rule"></div>
-    <div id="tribute-list"></div>
+  <section id="story" aria-labelledby="h-story">
+    <h2 id="h-story">His story</h2><div class="rule"></div>
+    <ol class="story" id="story-list"></ol>
   </section>
 
   <section id="book" aria-labelledby="h-book">
     <h2 id="h-book">His words</h2><div class="rule"></div>
-    <div class="book">
-      <a class="book-cover" id="book-cover"><img alt="" loading="lazy"></a>
-      <div>
-        <h3 id="book-title"></h3>
-        <p id="book-about"></p>
-        <a class="btn" id="book-open">Read his book</a>
-      </div>
+    <p class="intro" id="book-about"></p>
+    <iframe class="reader" id="reader" title="" loading="lazy"></iframe>
+    <p class="book-line"><a id="book-open">Open the book on its own page</a></p>
+    <div class="music" id="music" hidden>
+      <h3></h3><p></p><a class="btn" target="_blank" rel="noopener"></a>
     </div>
   </section>
 
-  <section id="photos" aria-labelledby="h-photos">
-    <h2 id="h-photos">Photographs</h2><div class="rule"></div>
-    <div class="photos" id="photo-list"></div>
-  </section>
-
-  <section id="videos" aria-labelledby="h-videos">
-    <h2 id="h-videos">Videos</h2><div class="rule"></div>
-    <div class="videos" id="video-list"></div>
+  <section id="guestbook" aria-labelledby="h-guestbook">
+    <h2 id="h-guestbook">Guestbook</h2><div class="rule"></div>
+    <p class="intro" id="gb-intro"></p>
+    <div class="gb-actions"><button type="button" class="btn" id="open-sign" data-sign>Sign the guestbook</button></div>
+    <form class="sign-form" id="sign-form" hidden novalidate>
+      <h3>Sign the guestbook</h3>
+      <label for="g-name">Your name</label>
+      <input type="text" id="g-name" maxlength="80" autocomplete="name" required>
+      <label for="g-rel">How you knew him (if you like)</label>
+      <input type="text" id="g-rel" maxlength="60" autocomplete="off">
+      <label for="g-msg">A memory of Micah, or a few words for his family</label>
+      <textarea id="g-msg" maxlength="6000"></textarea>
+      <button type="button" class="ask" id="g-ask">Not sure what to say? <b>Answer a question</b></button>
+      <div class="photo-row">
+        <input type="file" id="g-photo" class="vh" accept="image/*">
+        <label for="g-photo" class="btn line">Add a photo</label>
+        <div class="preview" id="g-preview" hidden><img id="g-preview-img" alt="The photo you chose"><button type="button" id="g-remove">Remove</button></div>
+      </div>
+      <input type="text" id="g-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="btn submit" id="g-submit">Sign the guestbook</button>
+      <p class="status" id="g-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="entries" id="entries"></div>
   </section>
 
   <section id="loved" aria-labelledby="h-loved">
-    <h2 id="h-loved">Loved ones</h2><div class="rule"></div>
+    <h2 id="h-loved">Family</h2><div class="rule"></div>
     <div class="loved" id="loved-list"></div>
   </section>
 </main>
@@ -209,8 +275,9 @@
   function $(id) { return document.getElementById(id); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function list(names) { return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0]; }
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // Everything below is set with textContent: the family's words are never read as code.
+  // Everything is set with textContent: the family's words, and the guestbook's, are never read as code.
   $('portrait').src = M.portrait; $('portrait').alt = M.name;
   $('name').textContent = M.name;
   $('years').textContent = M.years;
@@ -222,60 +289,222 @@
   }
   if (M.keepers && M.keepers.length) $('kept').textContent = 'Kept by ' + list(M.keepers) + ', for the family.';
 
-  M.tributes.forEach(function (t) {
-    var a = el('article', 'tribute');
-    a.appendChild(el('h3', 't-name', t.name));
-    if (t.relation) a.appendChild(el('p', 't-rel', t.relation));
-    t.paragraphs.forEach(function (p) { a.appendChild(el('p', null, p)); });
-    $('tribute-list').appendChild(a);
-  });
-
-  var cover = $('book-cover');
-  cover.href = M.book.href; cover.setAttribute('aria-label', 'Read ' + M.book.title);
-  cover.querySelector('img').src = M.book.cover;
-  $('book-title').textContent = M.book.title;
-  $('book-about').textContent = M.book.about;
-  $('book-open').href = M.book.href;
-
-  M.photos.forEach(function (p, i) {
+  /* ---------- his story ---------- */
+  var allPhotos = [];   // every photo on the page, in order, for the full-size viewer
+  var SHOW = 9;         // photos shown before "Show all"
+  function photoButton(p) {
+    var i = allPhotos.length; allPhotos.push(p);
     var b = el('button', 'ph'); b.type = 'button'; b.setAttribute('data-i', i);
-    b.setAttribute('aria-label', 'Photograph ' + (i + 1) + ' of ' + M.photos.length + ', full size');
+    b.setAttribute('aria-label', 'Photograph, full size');
     var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; im.width = p.w; im.height = p.h; im.src = p.src;
     b.appendChild(im);
-    $('photo-list').appendChild(b);
-  });
-
-  M.videos.forEach(function (v) {
-    var f = el('figure', 'video');
-    var vid = el('video'); vid.controls = true; vid.preload = 'metadata'; vid.setAttribute('playsinline', '');
-    vid.src = v.src + '#t=0.1';   // shows the first frame before it plays
-    if (v.title) vid.setAttribute('aria-label', v.title);
-    f.appendChild(vid);
-    if (v.title) f.appendChild(el('figcaption', null, v.title));
-    $('video-list').appendChild(f);
+    return b;
+  }
+  M.story.forEach(function (s) {
+    var li = el('li', 'moment' + (s.photos && s.photos.length > 1 ? ' major' : ''));
+    if (s.when) li.appendChild(el('span', 'm-when label', s.when));
+    if (s.title) li.appendChild(el('h3', 'm-title', s.title));
+    if (s.text) li.appendChild(el('p', 'm-text', s.text));
+    if (s.link) {
+      var a = el('a', 'm-link', s.link.label); a.href = s.link.href;
+      if (/^https?:/.test(s.link.href)) { a.target = '_blank'; a.rel = 'noopener'; }
+      li.appendChild(a);
+    }
+    if (s.photos && s.photos.length === 1) {
+      var one = el('div', 'one'); one.appendChild(photoButton(s.photos[0])); li.appendChild(one);
+    } else if (s.photos && s.photos.length) {
+      var mo = el('div', 'mosaic');
+      s.photos.forEach(function (p, k) { var b = photoButton(p); if (k >= SHOW) b.hidden = true; mo.appendChild(b); });
+      li.appendChild(mo);
+      if (s.photos.length > SHOW) {
+        var more = el('button', 'more', 'Show all ' + s.photos.length + ' photos'); more.type = 'button';
+        more.addEventListener('click', function () {
+          Array.prototype.forEach.call(mo.children, function (c) { c.hidden = false; });
+          more.remove();
+        });
+        li.appendChild(more);
+      }
+    }
+    if (s.videos && s.videos.length) {
+      var cl = el('div', 'clips' + (s.videos.length === 1 ? ' solo' : ''));
+      s.videos.forEach(function (src) {
+        var v = el('video'); v.controls = true; v.preload = 'metadata'; v.setAttribute('playsinline', '');
+        v.src = src + '#t=0.1';   // shows the first frame before it plays
+        if (s.title) v.setAttribute('aria-label', s.title);
+        cl.appendChild(v);
+      });
+      li.appendChild(cl);
+    }
+    $('story-list').appendChild(li);
   });
   // one video at a time
   document.addEventListener('play', function (e) {
     Array.prototype.forEach.call(document.querySelectorAll('video'), function (v) { if (v !== e.target) v.pause(); });
   }, true);
 
+  /* ---------- his words ---------- */
+  $('book-about').textContent = M.book.about;
+  var reader = $('reader');
+  reader.title = M.book.title; reader.src = M.book.href;
+  $('book-open').href = M.book.href;
+  function sizeReader() { reader.style.height = Math.round(Math.min(reader.clientWidth * 0.773 + 170, window.innerHeight * 0.85)) + 'px'; }
+  sizeReader(); window.addEventListener('resize', sizeReader);
+  if (M.music) {
+    var mu = $('music'); mu.hidden = false;
+    mu.querySelector('h3').textContent = M.music.title;
+    mu.querySelector('p').textContent = M.music.text;
+    var ml = mu.querySelector('a'); ml.href = M.music.href; ml.textContent = M.music.label;
+  }
+
+  /* ---------- the guestbook ---------- */
+  var G = M.guestbook, DB = M.database;
+  var HEADERS = { apikey: DB.key, Authorization: 'Bearer ' + DB.key };
+  $('gb-intro').textContent = G.intro;
+  function photoUrl(path) { return DB.url + '/storage/v1/object/public/photos/' + path; }
+  function niceDate(iso) { try { return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return ''; } }
+  function entryCard(e) {
+    var c = el('article', 'entry');
+    if (e.photo) { var im = el('img'); im.loading = 'lazy'; im.alt = 'A photo from ' + e.name; im.src = e.photo; c.appendChild(im); }
+    c.appendChild(el('h3', 'e-name', e.name));
+    var meta = [e.relation, e.date].filter(Boolean).join(' · ');
+    if (meta) c.appendChild(el('p', 'e-meta label', meta));
+    if (e.paragraphs && e.paragraphs.length) {
+      var t = el('div', 'e-text');
+      e.paragraphs.forEach(function (p) { t.appendChild(el('p', null, p)); });
+      c.appendChild(t);
+      var long = e.paragraphs.join(' ').length > 420;
+      if (long) {
+        t.classList.add('clamped');
+        var more = el('button', 'e-more', 'Read all of it'); more.type = 'button'; more.setAttribute('aria-expanded', 'false');
+        more.addEventListener('click', function () {
+          var open = t.classList.toggle('clamped') === false;
+          more.textContent = open ? 'Show less' : 'Read all of it';
+          more.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        c.appendChild(more);
+      }
+    }
+    return c;
+  }
+  var rows = [], known = {};
+  function drawEntries() {
+    var box = $('entries'); box.textContent = '';
+    G.tributes.forEach(function (t) { box.appendChild(entryCard(t)); });
+    rows.forEach(function (r) {
+      box.appendChild(entryCard({ name: r.name.trim(), relation: (r.relation || '').trim(), date: niceDate(r.created_at),
+        paragraphs: (r.message || '').trim() ? (r.message || '').trim().split(/\n{2,}/) : [], photo: r.photo_path ? photoUrl(r.photo_path) : null }));
+    });
+  }
+  function load() {
+    return fetch(DB.url + '/rest/v1/' + DB.table + '?select=id,created_at,name,relation,message,photo_path&order=created_at.asc', { headers: HEADERS })
+      .then(function (r) { if (!r.ok) throw new Error('load ' + r.status); return r.json(); })
+      .then(function (list) {
+        var sig = list.map(function (r) { return r.id; }).join(',');
+        if (sig === load.sig) return;
+        load.sig = sig; rows = list; known = {}; list.forEach(function (r) { known[r.id] = true; });
+        drawEntries();
+      })
+      .catch(function () {});
+  }
+  drawEntries(); load();
+  setInterval(function () { if (!document.hidden) load(); }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+
+  var form = $('sign-form'), nameEl = $('g-name'), relEl = $('g-rel'), msgEl = $('g-msg'), photoEl = $('g-photo');
+  var status = $('g-status'), submit = $('g-submit'), chosen = null;
+  try { var saved = localStorage.getItem('micah-name'); if (saved) nameEl.value = saved; } catch (e) {}
+  function say(t, k) { status.textContent = t; status.className = 'status' + (k ? ' ' + k : ''); }
+  function openSign() {
+    form.hidden = false; $('open-sign').hidden = true;
+    form.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
+    setTimeout(function () { (nameEl.value ? msgEl : nameEl).focus({ preventScroll: true }); }, 350);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sign]'), function (b) {
+    b.addEventListener('click', function (e) { e.preventDefault(); openSign(); });
+  });
+  var askAt = -1, asked = '';
+  $('g-ask').addEventListener('click', function () {
+    askAt = (askAt + 1) % G.questions.length;
+    var q = G.questions[askAt], rest = msgEl.value;
+    if (asked && rest.indexOf(asked) === 0) rest = rest.slice(asked.length).replace(/^\n+/, '');
+    asked = q; msgEl.value = q + '\n\n' + rest;
+    msgEl.focus(); msgEl.setSelectionRange(msgEl.value.length, msgEl.value.length);
+  });
+  photoEl.addEventListener('change', function () {
+    var f = photoEl.files && photoEl.files[0]; if (!f) return;
+    if (f.type && f.type.indexOf('image/') !== 0) { say('That file is not a photo.', 'warn'); photoEl.value = ''; return; }
+    chosen = f; try { $('g-preview-img').src = URL.createObjectURL(f); } catch (e) {}
+    $('g-preview').hidden = false; say('');
+  });
+  $('g-remove').addEventListener('click', function () { chosen = null; photoEl.value = ''; $('g-preview').hidden = true; });
+  // Only a re-encoded copy is sent: small, readable everywhere, and without location data.
+  function shrink(file) {
+    return new Promise(function (resolve) {
+      var url; try { url = URL.createObjectURL(file); } catch (e) { resolve(null); return; }
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var s = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+          var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+          c.toBlob(function (b) { resolve(b || null); }, 'image/jpeg', 0.86);
+        } catch (e) { resolve(null); }
+      };
+      img.onerror = function () { resolve(null); };
+      img.src = url;
+    });
+  }
+  function upload(blob) {
+    var path = DB.photoFolder + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+    var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
+    h['Content-Type'] = 'image/jpeg'; h['x-upsert'] = 'false';
+    return fetch(DB.url + '/storage/v1/object/photos/' + path, { method: 'POST', headers: h, body: blob })
+      .then(function (r) { if (!r.ok) throw new Error('upload'); return path; });
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if ($('g-website').value) return;
+    var name = nameEl.value.trim(), message = msgEl.value.trim(), relation = relEl.value.trim();
+    if (!name) { say('Add your name so the family knows who wrote this.', 'warn'); nameEl.focus(); return; }
+    if (!message && !chosen) { say('Add a few words, a photo, or both.', 'warn'); msgEl.focus(); return; }
+    try { localStorage.setItem('micah-name', name); } catch (err) {}
+    submit.disabled = true; say(chosen ? 'Adding your photo. This can take a moment on a phone.' : 'Adding it.');
+    var work = chosen ? shrink(chosen).then(function (b) { if (!b) throw new Error('cant-read'); return upload(b); }) : Promise.resolve(null);
+    work.then(function (path) {
+      var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
+      h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=representation';
+      return fetch(DB.url + '/rest/v1/' + DB.table, { method: 'POST', headers: h,
+        body: JSON.stringify({ name: name, relation: relation || null, message: message || null, photo_path: path || null }) })
+        .then(function (r) { if (!r.ok) throw new Error('save'); return r.json(); });
+    }).then(function (list) {
+      if (list && list[0] && !known[list[0].id]) { known[list[0].id] = true; rows.push(list[0]); load.sig = ''; drawEntries(); }
+      msgEl.value = ''; relEl.value = ''; chosen = null; photoEl.value = ''; $('g-preview').hidden = true;
+      say('Thank you. Your words are in the guestbook.', 'ok');
+      var last = $('entries').lastElementChild; if (last) last.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'center' });
+    }).catch(function (err) {
+      if (err && err.message === 'cant-read') say('This phone can’t open that photo to send it. Try a screenshot of it instead.', 'warn');
+      else say('That did not go through. Check your signal and try once more; nothing was lost.', 'warn');
+    }).then(function () { submit.disabled = false; });
+  });
+
+  /* ---------- family ---------- */
   M.lovedOnes.forEach(function (p) {
     var d = el('div');
     d.appendChild(el('p', 'l-name', p.name));
-    if (p.relation) d.appendChild(el('p', 'l-rel', p.relation));
+    if (p.relation) d.appendChild(el('p', 'l-rel label', p.relation));
     $('loved-list').appendChild(d);
   });
 
-  // a photo, full size, with Back and Next, arrows, swipe and Escape
+  /* ---------- a photo, full size, with Back and Next, arrows, swipe and Escape ---------- */
   var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null;
   function show(i) {
-    at = (i + M.photos.length) % M.photos.length;
-    vImg.src = M.photos[at].src;
-    $('v-count').textContent = (at + 1) + ' / ' + M.photos.length;
+    at = (i + allPhotos.length) % allPhotos.length;
+    vImg.src = allPhotos[at].src;
+    $('v-count').textContent = (at + 1) + ' / ' + allPhotos.length;
   }
   function open(i) { opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
   function close() { viewer.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); }
-  $('photo-list').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-i')); });
+  $('story-list').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-i')); });
   $('v-prev').addEventListener('click', function () { show(at - 1); });
   $('v-next').addEventListener('click', function () { show(at + 1); });
   $('v-close').addEventListener('click', close);

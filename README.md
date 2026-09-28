@@ -5,10 +5,10 @@ Micah Bielert, June 28, 1986 – March 8, 2025. A memorial page kept by Rae (his
 Live at https://micah-bielert.netlify.app (Netlify project `micah-bielert`, linked to `main`).
 
 - `site/` is the published site and nothing else:
-  - `index.html` lays out the memorial page; `content.js` holds everything about Micah it shows (name, dates, tributes, the book, photos, videos, loved ones). To change the words, edit `content.js`. The family's tributes are kept exactly as they wrote them.
-  - `photos/` are the photos from his Keeper memorial, re-saved without any hidden metadata; `videos/` are its four videos.
+  - `index.html` lays out the page: his story as a timeline (the eras and moments from his Keeper memorial, each with its photos and videos), his words (the book, set right into the page, and his Music and Lyrics playlist), the guestbook, and his family. `content.js` holds everything about Micah it shows. To change the words, edit `content.js`. The family's tributes are kept exactly as they wrote them.
+  - `photos/` are the photos from his Keeper memorial, re-saved without any hidden metadata; `videos/` are its four videos (the three Portraits slideshows and Father and Son).
   - `book/` is the book reader: `index.html`, `pages/` (one image per page), `thumbs/` (the All pages grid), `pages.json` (each page's words, for screen readers), and `book.pdf` (the full export, for Save the PDF). Old links like `/#44` are sent on to `/book/#44`.
-- The source is the Canva design "Micah Social Writings" (87 pages, 11 × 8.5 in landscape). To update the book, edit it in Canva, export a PDF, and run `python3 scripts/make_pages.py export.pdf`, then replace `site/book.pdf`.
-- Links: `/book/#44` opens page 44 of the book; `#tributes`, `#book`, `#photos`, `#videos` and `#loved` open those parts of the page.
+- The guestbook: the three tributes from his Keeper page (Hannah, Donna, Rae) are in `content.js` and always come first; everyone else's entries are rows in the `micah_guestbook` table of the Supabase project `for-memom` (ref `ckoysoolddkpvipiwadi`), which the free plan's two-project limit made the practical home. Anyone with the link can read and sign, with a photo if they like (saved under `micah/` in the `photos` bucket, re-encoded in the browser so no location data is sent); nobody can edit or delete through the site. To take an entry down, in Supabase's SQL editor: `update public.micah_guestbook set hidden = true where id = '<id>';`. The key in `content.js` is the public one and is meant to be there.
+- Links: `/book/#44` opens page 44 of the book; `#story`, `#book`, `#guestbook` and `#loved` open those parts of the page.
 - The site asks search engines not to list it (`<meta name="robots" content="noindex">` in `index.html`). Remove that line to let people find it by searching.
 - No build step, no trackers, no accounts. Keep this repo private.
