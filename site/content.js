@@ -5,10 +5,10 @@ window.MEMORIAL = {
   "name": "Micah Bielert",
   "years": "June 28, 1986 – March 8, 2025",
   "portrait": "photos/76.jpg",
-  "tagline": "Remembered by his family",
+  "tagline": "Always in our hearts",
   "epigraph": {
     "text": "The world must learn to operate on the principles of love rather than fear.",
-    "from": "Micah, in I’ve Gripped the Phantom"
+    "from": "Micah"
   },
   "story": [
     {
