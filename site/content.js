@@ -391,7 +391,7 @@ window.MEMORIAL = {
     },
     {
       "title": "Father and Son",
-      "text": "A collection of photos featuring Micah and Dean.",
+      "text": "A collection of photos featuring Micah and Dean, AKA Odin and Thor.",
       "videos": [
         "videos/01.mp4"
       ]
