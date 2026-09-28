@@ -178,6 +178,10 @@ window.MEMORIAL = {
           "w": 400,
           "h": 439
         }
+      ],
+      "era": [
+        1986,
+        2004
       ]
     },
     {
@@ -358,6 +362,10 @@ window.MEMORIAL = {
           "w": 400,
           "h": 400
         }
+      ],
+      "era": [
+        2005,
+        2026
       ]
     },
     {
@@ -489,6 +497,20 @@ window.MEMORIAL = {
     "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrb3lzb29sZGRrcHZpcGl3YWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Njc1MTQsImV4cCI6MjEwNjA0MzUxNH0.ztGb7Z7SOkzPHRiLuALI9dpMpOx9joXRYs77pjMzmY0",
     "table": "micah_guestbook",
     "photoFolder": "micah/",
-    "galleryTable": "micah_gallery"
-  }
+    "galleryTable": "micah_gallery",
+    "tagsTable": "micah_photo_tags"
+  },
+  "days": [
+    {
+      "month": 6,
+      "day": 28,
+      "text": "Today is Micah’s birthday. Share a memory of him in the guestbook, or add a photo."
+    },
+    {
+      "month": 3,
+      "day": 8,
+      "text": "Today we remember Micah. Share a memory of him in the guestbook, or add a photo."
+    }
+  ],
+  "bookPdf": "book/book.pdf"
 };

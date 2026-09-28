@@ -166,6 +166,35 @@
   .gallery .ph { margin-bottom: 10px; }
   .picked { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .picked img { width: 64px; height: 64px; object-fit: cover; }
+  .v-words { text-align: center; padding: 0 20px; }
+  .v-who { margin-top: 2px; min-height: 40px; padding: 0 6px; background: none; border: 0; cursor: pointer; font: italic 400 18px/1.3 var(--text); color: var(--on-dark); text-decoration: underline; text-decoration-color: var(--line-dark); text-underline-offset: 4px; }
+  .v-who.none { color: var(--on-dark-soft); }
+  .today { max-width: 30em; margin: 26px auto 0; padding: 12px 18px; border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); font: italic 400 22px/1.4 var(--display); color: var(--on-dark); }
+  .who-filter { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 26px; }
+  .who-filter:empty { display: none; }
+  .who-filter .lab { font: 400 12.5px/1 var(--ui); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+  .chip { min-height: 40px; padding: 0 14px; background: var(--card); border: 1px solid var(--rule); border-radius: 20px; cursor: pointer; font: 400 17px/1 var(--text); color: var(--ink); }
+  .chip[aria-pressed="true"] { border-color: var(--ink); background: #fff; }
+  .chip .n { margin-left: 6px; color: var(--muted); font-size: 14px; }
+  .chip.quiet { background: none; border-color: transparent; text-decoration: underline; text-underline-offset: 4px; color: var(--muted); }
+  .who-hint, .who-empty { margin: 22px auto 0; max-width: 30em; text-align: center; font-style: italic; color: var(--muted); }
+  .keep { max-width: 30em; margin: 48px auto 0; padding-top: 30px; border-top: 1px solid var(--rule); text-align: center; color: var(--ink-soft); }
+  .keep p { margin: 0 0 14px; }
+  .keep .status { margin-top: 12px; }
+  .tagger { width: min(460px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 0; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8); overflow: auto; }
+  .tagger::backdrop { background: rgba(0, 0, 0, 0.6); }
+  .tagger-in { padding: 24px 24px 20px; font-family: var(--ui); font-size: 16px; }
+  .tagger h2 { margin: 0 0 14px; text-align: left; font: italic 500 26px/1.2 var(--display); }
+  .t-photo img { display: block; max-width: 100%; max-height: 38vh; margin: 0 auto; }
+  .t-list { list-style: none; margin: 14px 0 0; padding: 0; }
+  .t-list li { display: flex; justify-content: space-between; align-items: center; min-height: 46px; border-bottom: 1px solid var(--rule); font: 400 19px/1.3 var(--text); }
+  .t-list li.none { color: var(--muted); font-style: italic; }
+  .t-list button { min-height: 44px; background: none; border: 0; cursor: pointer; text-decoration: underline; color: var(--muted); font-family: var(--ui); font-size: 14px; }
+  .tagger label { display: block; margin: 16px 0 6px; color: var(--muted); }
+  .t-add { display: flex; gap: 8px; }
+  .t-add input { flex: 1; min-height: 48px; padding: 8px 12px; background: #fff; border: 1px solid #8e866f; border-radius: 2px; font: 400 19px var(--text); color: var(--ink); }
+  .t-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+  .tagger .submit { width: 100%; margin-top: 16px; }
   .viewer-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 10px 16px 16px; }
   .viewer-bar button { min-height: 48px; padding: 0 18px; background: none; border: 1px solid var(--line-dark); color: var(--on-dark); cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase; }
   .viewer-bar span { min-width: 72px; text-align: center; font: 400 13px/1 var(--ui); letter-spacing: 0.1em; color: var(--on-dark-soft); font-variant-numeric: tabular-nums; }
@@ -179,6 +208,8 @@
     .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .entries { columns: 1; }
     .gallery { columns: 2; column-gap: 8px; }
+    .viewer-bar { gap: 6px; flex-wrap: wrap; }
+    .viewer-bar button { padding: 0 12px; }
     .gallery .ph { margin-bottom: 8px; }
     .entry { padding: 20px 20px 16px; }
     .nav { gap: 0 18px; padding-left: 10px; padding-right: 10px; }
@@ -187,7 +218,7 @@
   }
   @media print {
     html, body, .foot { background: #fff; color: #000; }
-    .nav, .btn, .clips, .viewer, .reader, .sign-form, .gb-actions, .more, .e-more, .ask, #gallery { display: none !important; }
+    .nav, .btn, .clips, .viewer, .reader, .sign-form, .gb-actions, .more, .e-more, .ask, #gallery, .today, .tagger { display: none !important; }
     .sheet { box-shadow: none; max-width: none; }
     .hero .name, .hero .epigraph p { color: #000; }
     .e-text.clamped { max-height: none; } .e-text.clamped::after { display: none; }
@@ -203,6 +234,7 @@
   <p class="years" id="years"></p>
   <p class="tagline" id="tagline"></p>
   <blockquote class="epigraph" id="epigraph" hidden><p></p><cite></cite></blockquote>
+  <p class="today" id="today" hidden></p>
   <div class="sign"><a class="btn light" href="#guestbook" data-sign>Sign the guestbook</a><a class="btn light" href="#gallery" data-add>Add photos</a></div>
 </header>
 
@@ -257,7 +289,7 @@
   <section id="gallery" aria-labelledby="h-gallery">
     <h2 id="h-gallery">Gallery</h2><div class="rule"></div>
     <p class="intro">Every photo of Micah here, from his Keeper memorial and from everyone who knew him. Add yours; no account needed.</p>
-    <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button></div>
+    <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button> <button type="button" class="btn line" id="play-all">Play as a slideshow</button></div>
     <form class="sign-form" id="add-form" hidden novalidate>
       <h3>Add your photos</h3>
       <label for="a-name">Your name</label>
@@ -268,14 +300,23 @@
         <span class="label" id="a-count"></span>
       </div>
       <div class="picked" id="a-picked"></div>
+      <label for="a-year">About when? (a year, if you know; it puts them in His life too)</label>
+      <input type="text" id="a-year" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="e.g. 2019">
       <label for="a-cap">A few words about them (if you like)</label>
       <input type="text" id="a-cap" maxlength="500" autocomplete="off">
       <input type="text" id="a-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button type="submit" class="btn submit" id="a-submit">Add to the gallery</button>
       <p class="status" id="a-status" role="status" aria-live="polite"></p>
     </form>
+    <div class="who-filter" id="who-filter"></div>
+    <p class="who-empty" id="who-empty" hidden>No photos have everyone you picked, yet.</p>
     <div class="gallery" id="gallery-grid"></div>
     <div class="gb-actions"><button type="button" class="more" id="gallery-more" hidden></button></div>
+    <div class="keep">
+      <p>Keep a copy of everything here: every photo, the guestbook, and his book.</p>
+      <button type="button" class="btn line" id="save-all">Save everything</button>
+      <p class="status" id="save-status" role="status" aria-live="polite"></p>
+    </div>
   </section>
 
   <section id="loved" aria-labelledby="h-loved">
@@ -286,19 +327,40 @@
 
 <footer class="foot">
   <p id="kept"></p>
-  <a href="#">Back to the top</a>
+  <a href="card/">Print a card to share</a> · <a href="#">Back to the top</a>
 </footer>
 
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph">
   <img id="viewer-img" alt="">
-  <p class="v-cap" id="v-cap"></p>
+  <div class="v-words"><p class="v-cap" id="v-cap"></p><button type="button" class="v-who" id="v-who"></button></div>
   <div class="viewer-bar">
     <button type="button" id="v-prev">Back</button>
     <span id="v-count"></span>
     <button type="button" id="v-next">Next</button>
+    <button type="button" id="v-play">Play</button>
     <button type="button" id="v-close">Close</button>
   </div>
 </div>
+
+<dialog class="tagger" id="tagger" aria-labelledby="t-title">
+  <form method="dialog" class="tagger-in" id="tagger-form">
+    <h2 id="t-title">Who is in this photo?</h2>
+    <div class="t-photo"><img id="t-img" alt=""></div>
+    <ul class="t-list" id="t-list"></ul>
+    <label for="t-name">Add someone by name</label>
+    <div class="t-add"><input id="t-name" type="text" maxlength="60" autocomplete="off" list="t-names"><button type="button" class="btn line" id="t-add">Add</button></div>
+    <datalist id="t-names"></datalist>
+    <p class="t-note">Only name people you know. Anyone in the family can add or take off a name.</p>
+    <p class="status" id="t-status" role="status" aria-live="polite"></p>
+    <button type="submit" class="btn submit">Done</button>
+  </form>
+</dialog>
+
+<!-- Netlify reads this form when the site is published; the page sends a copy of each new guestbook entry
+     and each batch of photos to it, and Netlify emails the family (set under Forms, Form notifications). -->
+<form name="micah-alerts" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="kind"><input name="name"><textarea name="words"></textarea><input name="link"><input name="bot-field">
+</form>
 
 <script src="content.js"></script>
 <script>
@@ -324,53 +386,74 @@
   }
   if (M.keepers && M.keepers.length) $('kept').textContent = 'Kept by ' + list(M.keepers) + ', for the family.';
 
-  /* ---------- his story ---------- */
-  var allPhotos = [];   // every photo on the page, in order, for the full-size viewer
-  var SHOW = 9;         // photos shown before "Show all"
-  function photoButton(p) {
-    var i = allPhotos.length; allPhotos.push(p);
-    var b = el('button', 'ph'); b.type = 'button'; b.setAttribute('data-i', i);
-    b.setAttribute('aria-label', 'Photograph, full size');
-    var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; im.width = p.w; im.height = p.h; im.src = p.src;
+  /* ---------- his life ---------- */
+  // The photos from his Keeper memorial, in story order. Photos the family adds with a year join their era.
+  var keeperPhotos = [], galleryRows = [], rows = [];
+  M.story.forEach(function (s) { (s.photos || []).forEach(function (p) { keeperPhotos.push({ key: p.src, src: p.src, w: p.w, h: p.h, cap: '' }); }); });
+  var SHOW = 9, opened = {}, storySet = [], storySig = null;
+  function photoButton(p, set, attr) {
+    var b = el('button', 'ph'); b.type = 'button'; b.setAttribute(attr, set.length); set.push(p);
+    b.setAttribute('aria-label', (p.cap || 'Photograph') + ', full size');
+    var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; if (p.w) { im.width = p.w; im.height = p.h; } im.src = p.src;
     b.appendChild(im);
     return b;
   }
-  M.story.forEach(function (s) {
-    var li = el('li', 'moment' + (s.photos && s.photos.length > 1 ? ' major' : ''));
-    if (s.when) li.appendChild(el('span', 'm-when label', s.when));
-    if (s.title) li.appendChild(el('h3', 'm-title', s.title));
-    if (s.text) li.appendChild(el('p', 'm-text', s.text));
-    if (s.link) {
-      var a = el('a', 'm-link', s.link.label); a.href = s.link.href;
-      if (/^https?:/.test(s.link.href)) { a.target = '_blank'; a.rel = 'noopener'; }
-      li.appendChild(a);
-    }
-    if (s.photos && s.photos.length === 1) {
-      var one = el('div', 'one'); one.appendChild(photoButton(s.photos[0])); li.appendChild(one);
-    } else if (s.photos && s.photos.length) {
-      var mo = el('div', 'mosaic');
-      s.photos.forEach(function (p, k) { var b = photoButton(p); if (k >= SHOW) b.hidden = true; mo.appendChild(b); });
-      li.appendChild(mo);
-      if (s.photos.length > SHOW) {
-        var more = el('button', 'more', 'Show all ' + s.photos.length + ' photos'); more.type = 'button';
-        more.addEventListener('click', function () {
-          Array.prototype.forEach.call(mo.children, function (c) { c.hidden = false; });
-          more.remove();
-        });
-        li.appendChild(more);
+  function addedFor(era) {
+    return galleryRows.filter(function (r) { return r.year && r.year >= era[0] && r.year <= era[1]; })
+      .sort(function (a, b) { return (a.year - b.year) || (a.created_at < b.created_at ? -1 : 1); })
+      .map(galleryItem);
+  }
+  function drawStory() {
+    // only when a dated family photo has come or gone, so a video playing isn't interrupted
+    var sig = galleryRows.filter(function (r) { return r.year; }).map(function (r) { return r.id + ':' + r.year; }).join(',');
+    if (sig === storySig) return;
+    storySig = sig; storySet = [];
+    var box = $('story-list'); box.textContent = '';
+    M.story.forEach(function (s, si) {
+      var photos = (s.photos || []).map(function (p) { return { key: p.src, src: p.src, w: p.w, h: p.h, cap: '' }; });
+      if (s.era) photos = photos.concat(addedFor(s.era));
+      var li = el('li', 'moment' + (photos.length > 1 ? ' major' : ''));
+      if (s.when) li.appendChild(el('span', 'm-when label', s.when));
+      if (s.title) li.appendChild(el('h3', 'm-title', s.title));
+      if (s.text) li.appendChild(el('p', 'm-text', s.text));
+      if (s.link) {
+        var a = el('a', 'm-link', s.link.label); a.href = s.link.href;
+        if (/^https?:/.test(s.link.href)) { a.target = '_blank'; a.rel = 'noopener'; }
+        li.appendChild(a);
       }
-    }
-    if (s.videos && s.videos.length) {
-      var cl = el('div', 'clips' + (s.videos.length === 1 ? ' solo' : ''));
-      s.videos.forEach(function (src) {
-        var v = el('video'); v.controls = true; v.preload = 'metadata'; v.setAttribute('playsinline', '');
-        v.src = src + '#t=0.1';   // shows the first frame before it plays
-        if (s.title) v.setAttribute('aria-label', s.title);
-        cl.appendChild(v);
-      });
-      li.appendChild(cl);
-    }
-    $('story-list').appendChild(li);
+      if (photos.length === 1) {
+        var one = el('div', 'one'); one.appendChild(photoButton(photos[0], storySet, 'data-s')); li.appendChild(one);
+      } else if (photos.length) {
+        var mo = el('div', 'mosaic');
+        photos.forEach(function (p, k) { var b = photoButton(p, storySet, 'data-s'); if (k >= SHOW && !opened[si]) b.hidden = true; mo.appendChild(b); });
+        li.appendChild(mo);
+        if (photos.length > SHOW && !opened[si]) {
+          var more = el('button', 'more', 'Show all ' + photos.length + ' photos'); more.type = 'button';
+          more.addEventListener('click', function () {
+            opened[si] = true;
+            Array.prototype.forEach.call(mo.children, function (c) { c.hidden = false; });
+            more.remove();
+          });
+          li.appendChild(more);
+        }
+      }
+      if (s.videos && s.videos.length) {
+        var cl = el('div', 'clips' + (s.videos.length === 1 ? ' solo' : ''));
+        s.videos.forEach(function (src) {
+          var v = el('video'); v.controls = true; v.preload = 'metadata'; v.setAttribute('playsinline', '');
+          v.src = src + '#t=0.1';   // shows the first frame before it plays
+          if (s.title) v.setAttribute('aria-label', s.title);
+          cl.appendChild(v);
+        });
+        li.appendChild(cl);
+      }
+      box.appendChild(li);
+    });
+  }
+  drawStory();
+  var today = new Date();
+  (M.days || []).forEach(function (d) {
+    if (today.getMonth() + 1 === d.month && today.getDate() === d.day) { $('today').textContent = d.text; $('today').hidden = false; }
   });
   // one video at a time
   document.addEventListener('play', function (e) {
@@ -382,6 +465,13 @@
   var reader = $('reader');
   reader.title = M.book.title; reader.src = M.book.href;
   $('book-open').href = M.book.href;
+  // A copy of each new guestbook entry and batch of photos goes to a Netlify form, which emails the family.
+  function notify(kind, name, words, link) {
+    try {
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'micah-alerts', kind: kind, name: name, words: words || '', link: link || '' }).toString() }).catch(function () {});
+    } catch (e) {}
+  }
   function sizeReader() { reader.style.height = Math.round(Math.min(reader.clientWidth * 0.773 + 170, window.innerHeight * 0.85)) + 'px'; }
   sizeReader(); window.addEventListener('resize', sizeReader);
   if (M.music) {
@@ -421,7 +511,7 @@
     }
     return c;
   }
-  var rows = [], known = {};
+  var known = {};
   function drawEntries() {
     var box = $('entries'); box.textContent = '';
     G.tributes.forEach(function (t) { box.appendChild(entryCard(t)); });
@@ -441,7 +531,7 @@
       })
       .catch(function () {});
   }
-  drawEntries(); load();
+  drawEntries(); load(); 
   setInterval(function () { if (!document.hidden) load(); }, 60000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
 
@@ -515,6 +605,8 @@
       if (list && list[0] && !known[list[0].id]) { known[list[0].id] = true; rows.push(list[0]); load.sig = ''; drawEntries(); drawGallery(); }
       msgEl.value = ''; relEl.value = ''; chosen = null; photoEl.value = ''; $('g-preview').hidden = true;
       say('Thank you. Your words are in the guestbook.', 'ok');
+      var saved = list && list[0];
+      notify('Guestbook entry', name, [relation, message].filter(Boolean).join('\n\n'), saved && saved.photo_path ? photoUrl(saved.photo_path) : location.origin + '/#guestbook');
       var last = $('entries').lastElementChild; if (last) last.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'center' });
     }).catch(function (err) {
       if (err && err.message === 'cant-read') say('This phone can’t open that photo to send it. Try a screenshot of it instead.', 'warn');
@@ -523,42 +615,104 @@
   });
 
   /* ---------- the gallery: everyone's photos, newest first, then the ones from his Keeper memorial ---------- */
-  var galleryRows = [], galleryItems = [], galleryAll = false, GALLERY_SHOW = 24;
-  function drawGallery() {
-    var added = [];
-    galleryRows.forEach(function (r) { added.push({ at: r.created_at, src: photoUrl(r.photo_path), cap: 'Added by ' + r.name.trim() + (r.caption && r.caption.trim() ? ': ' + r.caption.trim() : '') }); });
-    rows.forEach(function (r) { if (r.photo_path) added.push({ at: r.created_at, src: photoUrl(r.photo_path), cap: 'From ' + r.name.trim() + ', in the guestbook' }); });
+  var galleryItems = [], galleryAll = false, GALLERY_SHOW = 24;
+  function galleryItem(r) {
+    return { key: 'g-' + r.id, at: r.created_at, src: photoUrl(r.photo_path),
+      cap: 'Added by ' + r.name.trim() + (r.year ? ', ' + r.year : '') + (r.caption && r.caption.trim() ? ': ' + r.caption.trim() : '') };
+  }
+  function everyItem() {
+    var added = galleryRows.map(galleryItem);
+    rows.forEach(function (r) { if (r.photo_path) added.push({ key: 'gb-' + r.id, at: r.created_at, src: photoUrl(r.photo_path), cap: 'From ' + r.name.trim() + ', in the guestbook' }); });
     added.sort(function (a, b) { return a.at < b.at ? 1 : a.at > b.at ? -1 : 0; });
-    galleryItems = added.concat(allPhotos.map(function (p) { return { src: p.src, w: p.w, h: p.h, cap: '' }; }));
+    return added.concat(keeperPhotos);
+  }
+
+  // who is in each photo: append-only rows, and for each photo and name the latest row wins
+  var tagRows = [], tagsOn = Object.create(null), tagSig = '', picked = Object.create(null), pickAll = false;
+  function nkey(n) { return (n || '').trim().toLowerCase().replace(/\s+/g, ' '); }
+  function computeTags() {
+    tagsOn = Object.create(null);
+    tagRows.forEach(function (t) {
+      var on = tagsOn[t.photo_key] || (tagsOn[t.photo_key] = Object.create(null));
+      if (t.removed) delete on[nkey(t.person)]; else on[nkey(t.person)] = t.person.trim();
+    });
+  }
+  function namesIn(k) { var on = tagsOn[k] || {}; return Object.keys(on).map(function (x) { return on[x]; }).sort(); }
+  function everyone(items) {
+    var count = Object.create(null), label = Object.create(null);
+    items.forEach(function (p) { var on = tagsOn[p.key]; if (on) Object.keys(on).forEach(function (k) { count[k] = (count[k] || 0) + 1; label[k] = on[k]; }); });
+    return Object.keys(count).map(function (k) { return { k: k, name: label[k], n: count[k] }; })
+      .sort(function (a, b) { return b.n - a.n || (a.name < b.name ? -1 : 1); });
+  }
+  function drawFilter(people) {
+    var bar = $('who-filter'); bar.textContent = '';
+    if (!people.length) { bar.appendChild(el('p', 'who-hint', 'Tap a photo, then “Who is here?” to name the people in it. Names gather here, so anyone can see every photo of someone.')); return; }
+    bar.appendChild(el('span', 'lab', 'Show'));
+    var all = el('button', 'chip', 'Everyone'); all.type = 'button'; all.setAttribute('data-who', ''); all.setAttribute('aria-pressed', Object.keys(picked).length ? 'false' : 'true');
+    bar.appendChild(all);
+    people.forEach(function (x) {
+      var c = el('button', 'chip', x.name); c.type = 'button'; c.setAttribute('data-who', x.k); c.setAttribute('aria-pressed', picked[x.k] ? 'true' : 'false');
+      c.appendChild(el('span', 'n', String(x.n)));
+      bar.appendChild(c);
+    });
+    if (Object.keys(picked).length > 1) {
+      var t = el('button', 'chip quiet', pickAll ? 'Photos with all of them' : 'Photos with any of them'); t.type = 'button'; t.setAttribute('data-who-mode', '1');
+      bar.appendChild(t);
+    }
+  }
+  $('who-filter').addEventListener('click', function (e) {
+    var w = e.target.closest('[data-who], [data-who-mode]'); if (!w) return;
+    if (w.hasAttribute('data-who-mode')) pickAll = !pickAll;
+    else { var k = w.getAttribute('data-who'); if (!k) picked = Object.create(null); else if (picked[k]) delete picked[k]; else picked[k] = true; }
+    drawGallery();
+  });
+
+  function drawGallery() {
+    var all = everyItem(), people = everyone(all);
+    Object.keys(picked).forEach(function (k) { if (!people.some(function (x) { return x.k === k; })) delete picked[k]; });
+    var want = Object.keys(picked);
+    galleryItems = !want.length ? all : all.filter(function (p) {
+      var on = tagsOn[p.key] || {};
+      return pickAll ? want.every(function (k) { return on[k]; }) : want.some(function (k) { return on[k]; });
+    });
+    drawFilter(people);
+    $('who-empty').hidden = galleryItems.length > 0;
     var grid = $('gallery-grid'); grid.textContent = '';
+    var shown = [];
     galleryItems.forEach(function (p, i) {
       if (!galleryAll && i >= GALLERY_SHOW) return;
-      var b = el('button', 'ph'); b.type = 'button'; b.setAttribute('data-g', i);
-      b.setAttribute('aria-label', (p.cap || 'Photograph') + ', full size');
-      var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; if (p.w) { im.width = p.w; im.height = p.h; } im.src = p.src;
-      b.appendChild(im); grid.appendChild(b);
+      grid.appendChild(photoButton(p, shown, 'data-g'));
     });
     var more = $('gallery-more');
     more.hidden = galleryAll || galleryItems.length <= GALLERY_SHOW;
     more.textContent = 'Show all ' + galleryItems.length + ' photos';
+    if (!viewer.hidden) drawWho();
   }
   $('gallery-more').addEventListener('click', function () { galleryAll = true; drawGallery(); });
   function loadGallery() {
-    return fetch(DB.url + '/rest/v1/' + DB.galleryTable + '?select=id,created_at,name,caption,photo_path&order=created_at.asc', { headers: HEADERS })
+    return fetch(DB.url + '/rest/v1/' + DB.galleryTable + '?select=id,created_at,name,caption,year,photo_path&order=created_at.asc', { headers: HEADERS })
       .then(function (r) { if (!r.ok) throw new Error('gallery ' + r.status); return r.json(); })
       .then(function (list) {
         var sig = list.map(function (r) { return r.id; }).join(',');
         if (sig === loadGallery.sig) return;
-        loadGallery.sig = sig; galleryRows = list; drawGallery();
+        loadGallery.sig = sig; galleryRows = list; drawGallery(); drawStory();
       })
       .catch(function () {});
   }
-  drawGallery(); loadGallery();
-  setInterval(function () { if (!document.hidden) loadGallery(); }, 60000);
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) loadGallery(); });
+  function loadTags() {
+    return fetch(DB.url + '/rest/v1/' + DB.tagsTable + '?select=id,photo_key,person,removed&order=id.asc', { headers: HEADERS })
+      .then(function (r) { if (!r.ok) throw new Error('tags ' + r.status); return r.json(); })
+      .then(function (list) {
+        var sig = list.length + '|' + (list.length ? list[list.length - 1].id : '');
+        if (sig === tagSig) return;
+        tagSig = sig; tagRows = list; computeTags(); drawGallery();
+        if (tagger.open && tagging) drawTagger();
+      })
+      .catch(function () {});
+  }
 
-  var addForm = $('add-form'), aName = $('a-name'), aPhotos = $('a-photos'), aCap = $('a-cap'), aStatus = $('a-status'), aSubmit = $('a-submit');
-  var picked = [], MAX_AT_ONCE = 20;
+  var addForm = $('add-form'), aName = $('a-name'), aPhotos = $('a-photos'), aCap = $('a-cap'), aYear = $('a-year'), aStatus = $('a-status'), aSubmit = $('a-submit');
+  var addFiles = [], MAX_AT_ONCE = 20;
   try { var savedName = localStorage.getItem('micah-name'); if (savedName) aName.value = savedName; } catch (e) {}
   function asay(t, k) { aStatus.textContent = t; aStatus.className = 'status' + (k ? ' ' + k : ''); }
   Array.prototype.forEach.call(document.querySelectorAll('[data-add]'), function (b) {
@@ -568,21 +722,25 @@
     });
   });
   aPhotos.addEventListener('change', function () {
-    picked = Array.prototype.filter.call(aPhotos.files || [], function (f) { return !f.type || f.type.indexOf('image/') === 0; }).slice(0, MAX_AT_ONCE);
+    addFiles = Array.prototype.filter.call(aPhotos.files || [], function (f) { return !f.type || f.type.indexOf('image/') === 0; }).slice(0, MAX_AT_ONCE);
     var box = $('a-picked'); box.textContent = '';
-    picked.forEach(function (f) { var im = el('img'); im.alt = ''; try { im.src = URL.createObjectURL(f); } catch (e) {} box.appendChild(im); });
-    $('a-count').textContent = picked.length ? picked.length + (picked.length === 1 ? ' photo' : ' photos') : '';
+    addFiles.forEach(function (f) { var im = el('img'); im.alt = ''; try { im.src = URL.createObjectURL(f); } catch (e) {} box.appendChild(im); });
+    $('a-count').textContent = addFiles.length ? addFiles.length + (addFiles.length === 1 ? ' photo' : ' photos') : '';
     asay((aPhotos.files || []).length > MAX_AT_ONCE ? 'That is more than ' + MAX_AT_ONCE + ' at once; the first ' + MAX_AT_ONCE + ' will go in, and you can add more after.' : '');
   });
   addForm.addEventListener('submit', function (e) {
     e.preventDefault();
     if ($('a-website').value) return;
-    var name = aName.value.trim(), caption = aCap.value.trim();
+    var name = aName.value.trim(), caption = aCap.value.trim(), yearText = aYear.value.trim(), year = null;
     if (!name) { asay('Add your name so the family knows who shared these.', 'warn'); aName.focus(); return; }
-    if (!picked.length) { asay('Choose a photo or two first.', 'warn'); return; }
+    if (!addFiles.length) { asay('Choose a photo or two first.', 'warn'); return; }
+    if (yearText) {
+      year = parseInt(yearText, 10);
+      if (!(year >= 1986 && year <= 2025) || String(year) !== yearText) { asay('For the year, use four digits between 1986 and 2025, or leave it empty.', 'warn'); aYear.focus(); return; }
+    }
     try { localStorage.setItem('micah-name', name); } catch (err) {}
     aSubmit.disabled = true;
-    var files = picked.slice(), done = 0, failed = 0;
+    var files = addFiles.slice(), done = 0, failed = 0, first = null;
     var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
     h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=representation';
     // one at a time, so a phone on a weak signal isn't sending twenty at once
@@ -591,20 +749,82 @@
         asay('Adding photo ' + (i + 1) + ' of ' + files.length + '…');
         return shrink(f).then(function (b) { if (!b) throw new Error('cant-read'); return upload(b); })
           .then(function (path) {
-            return fetch(DB.url + '/rest/v1/' + DB.galleryTable, { method: 'POST', headers: h, body: JSON.stringify({ name: name, caption: caption || null, photo_path: path }) })
+            return fetch(DB.url + '/rest/v1/' + DB.galleryTable, { method: 'POST', headers: h, body: JSON.stringify({ name: name, caption: caption || null, year: year, photo_path: path }) })
               .then(function (r) { if (!r.ok) throw new Error('save'); return r.json(); });
           })
-          .then(function (list) { done++; if (list && list[0]) { galleryRows.push(list[0]); loadGallery.sig = ''; } })
+          .then(function (list) { done++; if (list && list[0]) { galleryRows.push(list[0]); loadGallery.sig = ''; if (!first) first = list[0]; } })
           .catch(function () { failed++; });
       });
     }, Promise.resolve()).then(function () {
-      drawGallery();
-      picked = []; aPhotos.value = ''; $('a-picked').textContent = ''; $('a-count').textContent = ''; aCap.value = '';
-      if (!failed) asay('Thank you. ' + (done === 1 ? 'Your photo is' : 'Your ' + done + ' photos are') + ' in the gallery.', 'ok');
+      drawGallery(); drawStory();
+      addFiles = []; aPhotos.value = ''; $('a-picked').textContent = ''; $('a-count').textContent = ''; aCap.value = ''; aYear.value = '';
+      if (done) notify('Photos added', name, done + (done === 1 ? ' photo' : ' photos') + (year ? ', ' + year : '') + (caption ? ': ' + caption : ''), first ? photoUrl(first.photo_path) : location.origin + '/#gallery');
+      if (!failed) asay('Thank you. ' + (done === 1 ? 'Your photo is' : 'Your ' + done + ' photos are') + ' in the gallery' + (year ? ' and in His life' : '') + '.', 'ok');
       else if (done) asay(done + ' went in, but ' + failed + ' didn’t. Try those again, or send a screenshot of them instead.', 'warn');
       else asay('That did not go through. Check your signal and try once more; nothing was lost.', 'warn');
       if (done) $('gallery-grid').scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
     }).then(function () { aSubmit.disabled = false; });
+  });
+
+  /* ---------- keep a copy: every photo, the guestbook and his book, in one zip ---------- */
+  function crc32(buf) {
+    var t = crc32.t;
+    if (!t) { t = crc32.t = new Uint32Array(256); for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } }
+    var x = 0xFFFFFFFF; for (var i = 0; i < buf.length; i++) x = t[(x ^ buf[i]) & 0xFF] ^ (x >>> 8);
+    return (x ^ 0xFFFFFFFF) >>> 0;
+  }
+  // A plain zip (stored, not compressed: photos and PDFs don't shrink anyway) that every computer and phone can open.
+  function makeZip(files) {
+    var enc = new TextEncoder(), parts = [], central = [], offset = 0;
+    files.forEach(function (f) {
+      var name = enc.encode(f.name), crc = crc32(f.data), size = f.data.length;
+      var h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(12, 0x21, true);
+      h.setUint32(14, crc, true); h.setUint32(18, size, true); h.setUint32(22, size, true); h.setUint16(26, name.length, true);
+      parts.push(new Uint8Array(h.buffer), name, f.data);
+      var c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(14, 0x21, true);
+      c.setUint32(16, crc, true); c.setUint32(20, size, true); c.setUint32(24, size, true); c.setUint16(28, name.length, true); c.setUint32(42, offset, true);
+      central.push(new Uint8Array(c.buffer), name);
+      offset += 30 + name.length + size;
+    });
+    var csize = central.reduce(function (a, b) { return a + b.length; }, 0);
+    var e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, csize, true); e.setUint32(16, offset, true);
+    return new Blob(parts.concat(central, [new Uint8Array(e.buffer)]), { type: 'application/zip' });
+  }
+  function safeName(t) { return (t || '').replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80); }
+  function guestbookText() {
+    var out = ['Guestbook for ' + M.name + ', ' + M.years, ''];
+    function one(name, meta, paras) { out.push(name + (meta ? ' (' + meta + ')' : ''), ''); paras.forEach(function (p) { out.push(p, ''); }); out.push('---', ''); }
+    G.tributes.forEach(function (t) { one(t.name, [t.relation, t.date].filter(Boolean).join(', '), t.paragraphs); });
+    rows.forEach(function (r) { one(r.name.trim(), [r.relation, niceDate(r.created_at)].filter(Boolean).join(', '), (r.message || '').trim() ? [r.message.trim()] : ['(a photo)']); });
+    return out.join('\n');
+  }
+  $('save-all').addEventListener('click', function () {
+    var btn = $('save-all'), st = $('save-status'), root = safeName(M.name) + '/';
+    function ssay(t, k) { st.textContent = t; st.className = 'status' + (k ? ' ' + k : ''); }
+    btn.disabled = true;
+    var jobs = everyItem().map(function (p, i) {
+      if (p.key.indexOf('photos/') === 0) return { name: root + 'Photos/' + p.key.slice(7), url: p.src };
+      return { name: root + 'Added by family/' + (p.at || '').slice(0, 10) + ' ' + safeName(p.cap).slice(0, 60) + ' ' + (i + 1) + '.jpg', url: p.src };
+    });
+    if (M.bookPdf) jobs.push({ name: root + safeName(M.book.title) + '.pdf', url: M.bookPdf });
+    var files = [{ name: root + 'Guestbook.txt', data: new TextEncoder().encode(guestbookText()) }], missed = 0;
+    jobs.reduce(function (chain, j, i) {
+      return chain.then(function () {
+        ssay('Gathering ' + (i + 1) + ' of ' + jobs.length + '…');
+        return fetch(j.url).then(function (r) { if (!r.ok) throw new Error('get'); return r.arrayBuffer(); })
+          .then(function (b) { files.push({ name: j.name, data: new Uint8Array(b) }); })
+          .catch(function () { missed++; });
+      });
+    }, Promise.resolve()).then(function () {
+      var blob = makeZip(files), a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = safeName(M.name) + '.zip';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 60000);
+      ssay(missed ? 'Saved, but ' + missed + ' couldn’t be fetched. Try again on a stronger signal.' : 'Saved: every photo, the guestbook and his book, in one file.', missed ? 'warn' : 'ok');
+    }).then(function () { btn.disabled = false; });
   });
 
   /* ---------- family ---------- */
@@ -615,35 +835,111 @@
     $('loved-list').appendChild(d);
   });
 
-  /* ---------- a photo, full size, with Back and Next, arrows, swipe and Escape ---------- */
-  var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = allPhotos;
+  /* ---------- a photo, full size, with Back and Next, arrows, swipe, Escape, and a slideshow ---------- */
+  var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = [], playing = null;
+  function drawWho() {
+    var p = vset[at], names = p ? namesIn(p.key) : [], w = $('v-who');
+    w.textContent = names.length ? names.join(', ') : 'Who is here?';
+    w.classList.toggle('none', !names.length);
+    w.setAttribute('aria-label', names.length ? 'In this photo: ' + names.join(', ') + '. Change who is named' : 'Say who is in this photo');
+  }
   function show(i) {
     at = (i + vset.length) % vset.length;
     vImg.src = vset[at].src;
     $('v-cap').textContent = vset[at].cap || '';
     $('v-count').textContent = (at + 1) + ' / ' + vset.length;
+    drawWho();
+    var next = vset[(at + 1) % vset.length]; if (next) { var pre = new Image(); pre.src = next.src; }
   }
-  function open(i, set) { vset = set || allPhotos; opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
+  function open(i, set) { vset = set; opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
+  function stopPlay() { clearInterval(playing); playing = null; $('v-play').textContent = 'Play'; }
+  function startPlay() { stopPlay(); playing = setInterval(function () { show(at + 1); }, 7000); $('v-play').textContent = 'Pause'; }
+  function close() {
+    stopPlay(); viewer.hidden = true; document.body.style.overflow = '';
+    try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); } catch (e) {}
+    if (opener) opener.focus();
+  }
+  $('story-list').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-s'), storySet); });
   $('gallery-grid').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-g'), galleryItems); });
-  function close() { viewer.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); }
-  $('story-list').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-i')); });
-  $('v-prev').addEventListener('click', function () { show(at - 1); });
-  $('v-next').addEventListener('click', function () { show(at + 1); });
+  $('play-all').addEventListener('click', function () {
+    if (!galleryItems.length) return;
+    open(0, galleryItems); startPlay();
+    try { if (viewer.requestFullscreen) viewer.requestFullscreen().catch(function () {}); } catch (e) {}
+  });
+  $('v-play').addEventListener('click', function () { if (playing) stopPlay(); else startPlay(); });
+  $('v-prev').addEventListener('click', function () { show(at - 1); if (playing) startPlay(); });
+  $('v-next').addEventListener('click', function () { show(at + 1); if (playing) startPlay(); });
   $('v-close').addEventListener('click', close);
+  $('v-who').addEventListener('click', function () { stopPlay(); openTagger(vset[at]); });
   viewer.addEventListener('click', function (e) { if (e.target === viewer || e.target === vImg) close(); });
+  document.addEventListener('fullscreenchange', function () { if (!document.fullscreenElement && playing) stopPlay(); });
   document.addEventListener('keydown', function (e) {
-    if (viewer.hidden) return;
+    if (viewer.hidden || tagger.open) return;
     if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowRight') show(at + 1);
-    else if (e.key === 'ArrowLeft') show(at - 1);
+    else if (e.key === 'ArrowRight') { show(at + 1); if (playing) startPlay(); }
+    else if (e.key === 'ArrowLeft') { show(at - 1); if (playing) startPlay(); }
   });
   var sx = null;
   viewer.addEventListener('touchstart', function (e) { sx = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
   viewer.addEventListener('touchend', function (e) {
     if (sx === null) return;
     var dx = e.changedTouches[0].clientX - sx; sx = null;
-    if (Math.abs(dx) > 50) show(at + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) { show(at + (dx < 0 ? 1 : -1)); if (playing) startPlay(); }
   }, { passive: true });
+
+  // naming the people in a photo
+  var tagger = $('tagger'), tList = $('t-list'), tName = $('t-name'), tStatus = $('t-status'), tagging = null;
+  function tsay(t, k) { tStatus.textContent = t; tStatus.className = 'status' + (k ? ' ' + k : ''); }
+  function openTagger(p) {
+    tagging = p; $('t-img').src = p.src; tName.value = ''; tsay('');
+    drawTagger();
+    if (tagger.showModal) tagger.showModal(); else tagger.setAttribute('open', '');
+  }
+  function drawTagger() {
+    tList.textContent = '';
+    var on = tagsOn[tagging.key] || {};
+    var ks = Object.keys(on).sort(function (a, b) { return on[a] < on[b] ? -1 : 1; });
+    if (!ks.length) tList.appendChild(el('li', 'none', 'No one yet.'));
+    ks.forEach(function (k) {
+      var li = el('li'); li.appendChild(el('span', null, on[k]));
+      var rm = el('button', null, 'Take off'); rm.type = 'button'; rm.setAttribute('data-untag', k); rm.setAttribute('aria-label', 'Take ' + on[k] + ' off this photo');
+      li.appendChild(rm); tList.appendChild(li);
+    });
+    var dl = $('t-names'); dl.textContent = '';
+    everyone(everyItem()).forEach(function (x) { var o = el('option'); o.value = x.name; dl.appendChild(o); });
+  }
+  function sendTag(person, removed) {
+    var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
+    h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=representation';
+    tsay('Saving…');
+    return fetch(DB.url + '/rest/v1/' + DB.tagsTable, { method: 'POST', headers: h, body: JSON.stringify({ photo_key: tagging.key, person: person, removed: removed }) })
+      .then(function (r) { if (!r.ok) throw new Error('tag'); return r.json(); })
+      .then(function (list) {
+        if (list && list[0]) tagRows.push(list[0]);
+        computeTags(); drawTagger(); drawGallery(); drawWho();
+        tsay(removed ? 'Taken off.' : 'Added.', 'ok');
+      })
+      .catch(function () { tsay('That did not go through. Check your signal and try once more.', 'warn'); });
+  }
+  function addTag() {
+    var name = tName.value.trim().replace(/\s+/g, ' ');
+    if (!name) { tName.focus(); return; }
+    var same = everyone(everyItem()).filter(function (x) { return x.k === nkey(name); })[0];
+    if (same) name = same.name;   // one spelling per person
+    if ((tagsOn[tagging.key] || {})[nkey(name)]) { tsay(name + ' is already here.'); return; }
+    tName.value = '';
+    sendTag(name, false);
+  }
+  $('t-add').addEventListener('click', addTag);
+  tName.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addTag(); } });
+  tList.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-untag]'); if (!b) return;
+    sendTag((tagsOn[tagging.key] || {})[b.getAttribute('data-untag')], true);
+  });
+
+  drawGallery(); loadGallery(); loadTags();
+  setInterval(function () { if (!document.hidden) { loadGallery(); loadTags(); } }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) { loadGallery(); loadTags(); } });
 })();
 </script>
 </body>
