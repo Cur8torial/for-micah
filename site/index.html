@@ -74,9 +74,30 @@
     border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark);
   }
   .nav::-webkit-scrollbar { display: none; }
-  .nav a { flex: none; display: flex; align-items: center; min-height: 52px; text-decoration: none; font: 400 13px/1 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-soft); }
+  .nav a { flex: none; display: flex; position: relative; align-items: center; min-height: 52px; text-decoration: none; font: 400 13px/1 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-soft); }
   .nav a:hover { color: var(--on-dark); }
   .nav .short { display: none; }
+  .nav { position: sticky; }
+  .nav a[aria-selected="true"] { color: var(--on-dark); }
+  .tab-ink { position: absolute; bottom: -1px; left: 0; height: 2px; width: 0; background: var(--on-dark); transition: transform 0.35s cubic-bezier(.3,.1,.25,1), width 0.35s cubic-bezier(.3,.1,.25,1); }
+  .panel { min-height: 60vh; }
+  .panel.entering { animation: panel-in 0.45s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  /* motion: a slow drift on his portrait, the opening settling in, and pieces rising into place as you scroll */
+  .frame { overflow: hidden; }
+  @media (prefers-reduced-motion: no-preference) {
+    .frame img { animation: drift 26s ease-in-out infinite alternate; transform-origin: 50% 40%; }
+    @keyframes drift { from { transform: scale(1); } to { transform: scale(1.07) translate(-1%, 1%); } }
+    .hero > * { animation: settle 0.9s cubic-bezier(.2,.7,.2,1) both; }
+    .hero > :nth-child(2) { animation-delay: 0.08s; } .hero > :nth-child(3) { animation-delay: 0.16s; } .hero > :nth-child(4) { animation-delay: 0.22s; }
+    .hero > :nth-child(5) { animation-delay: 0.28s; } .hero > :nth-child(6) { animation-delay: 0.36s; } .hero > :nth-child(n+7) { animation-delay: 0.44s; }
+    @keyframes settle { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @supports (animation-timeline: view()) {
+      .moment, .entry, .gallery .ph, .music, .keep { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+      @keyframes rise { from { opacity: 0.2; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    }
+  }
 
   /* the pages: one long warm gray sheet */
   .sheet { max-width: 960px; margin: 40px auto 0; padding: 8px clamp(20px, 6vw, 76px) 72px; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); }
@@ -97,7 +118,15 @@
   .m-text { margin: 8px 0 0; max-width: 34em; color: var(--ink-soft); }
   .m-link { display: inline-block; margin-top: 10px; font-style: italic; color: var(--ink-soft); text-underline-offset: 4px; }
   .m-link:hover { color: var(--ink); }
-  .mosaic { columns: 3 180px; column-gap: 10px; margin-top: 20px; }
+  .strip { position: relative; margin-top: 20px; }
+  .mosaic { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 4px; padding: 4px 4px 14px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .mosaic .ph { flex: none; width: auto; margin: 0; scroll-snap-align: start; box-shadow: 0 10px 18px -12px rgba(0, 0, 0, 0.55); transition: transform 0.35s ease, box-shadow 0.35s ease; }
+  .mosaic .ph img { height: 230px; width: auto; max-width: none; }
+  .mosaic .ph:hover { transform: translateY(-4px) rotate(-0.4deg); box-shadow: 0 16px 26px -14px rgba(0, 0, 0, 0.6); }
+  .strip-go { position: absolute; top: calc(50% - 30px); width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule); background: rgba(245, 243, 240, 0.92); color: var(--ink); cursor: pointer; font: 400 26px/1 var(--display); box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.5); }
+  .strip-go.back { left: -18px; } .strip-go.fwd { right: -18px; }
+  .strip-count { margin: 4px 0 0; }
   .ph { display: block; width: 100%; margin: 0 0 10px; padding: 0; border: 0; background: var(--ground-2); cursor: zoom-in; break-inside: avoid; }
   .ph img { display: block; width: 100%; height: auto; }
   .one { margin-top: 18px; max-width: 520px; }
@@ -156,7 +185,9 @@
   .l-rel { margin-top: 4px !important; }
 
   .foot { padding: 56px 20px calc(56px + env(safe-area-inset-bottom, 0px)); text-align: center; color: var(--on-dark-soft); font-style: italic; }
-  .foot a { display: inline-block; margin-top: 10px; font: 400 13px/1 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
+  .foot .help { margin-bottom: 18px; font-style: normal; max-width: 100%; min-height: 52px; padding: 12px 22px; line-height: 1.35; text-align: center; }
+  .foot-links { margin: 0; }
+  .foot-links a { display: inline-block; margin-top: 10px; font: 400 13px/1 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
 
   /* a photo, full size */
   .viewer { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; background: rgba(12, 11, 10, 0.97); padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
@@ -202,7 +233,8 @@
   @media (max-width: 640px) {
     body { font-size: 19px; }
     .sheet { margin-top: 24px; }
-    .mosaic { columns: 2; column-gap: 8px; }
+    .mosaic .ph img { height: 170px; }
+    .strip-go { display: none; }
     .ph { margin-bottom: 8px; }
     .moment { padding-left: 22px; }
     .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -238,20 +270,21 @@
   <div class="sign"><a class="btn light" href="#guestbook" data-sign>Sign the guestbook</a><a class="btn light" href="#gallery" data-add>Add photos</a></div>
 </header>
 
-<nav class="nav" aria-label="Sections">
-  <a href="#story"><span class="long">His life</span><span class="short">Life</span></a>
-  <a href="#book"><span class="long">Words and lyrics</span><span class="short">Words</span></a>
-  <a href="#guestbook">Guestbook</a>
-  <a href="#gallery">Gallery</a>
+<nav class="nav" id="tabs" role="tablist" aria-label="Sections">
+  <a href="#story" role="tab" id="tab-story" aria-controls="story" data-tab="story"><span class="long">His life</span><span class="short">Life</span></a>
+  <a href="#book" role="tab" id="tab-book" aria-controls="book" data-tab="book"><span class="long">Words and lyrics</span><span class="short">Words</span></a>
+  <a href="#guestbook" role="tab" id="tab-guestbook" aria-controls="guestbook" data-tab="guestbook">Guestbook</a>
+  <a href="#gallery" role="tab" id="tab-gallery" aria-controls="gallery" data-tab="gallery">Gallery</a>
+  <span class="tab-ink" id="tab-ink" aria-hidden="true"></span>
 </nav>
 
 <main class="sheet">
-  <section id="story" aria-labelledby="h-story">
+  <section id="story" class="panel" role="tabpanel" aria-labelledby="h-story">
     <h2 id="h-story">His life</h2><div class="rule"></div>
     <ol class="story" id="story-list"></ol>
   </section>
 
-  <section id="book" aria-labelledby="h-book">
+  <section id="book" class="panel" role="tabpanel" aria-labelledby="h-book">
     <h2 id="h-book">Words and lyrics</h2><div class="rule"></div>
     <p class="intro" id="book-about"></p>
     <iframe class="reader" id="reader" title="" loading="lazy"></iframe>
@@ -261,7 +294,7 @@
     </div>
   </section>
 
-  <section id="guestbook" aria-labelledby="h-guestbook">
+  <section id="guestbook" class="panel" role="tabpanel" aria-labelledby="h-guestbook">
     <h2 id="h-guestbook">Guestbook</h2><div class="rule"></div>
     <p class="intro" id="gb-intro"></p>
     <div class="gb-actions"><button type="button" class="btn" id="open-sign" data-sign>Sign the guestbook</button></div>
@@ -286,7 +319,7 @@
     <div class="entries" id="entries"></div>
   </section>
 
-  <section id="gallery" aria-labelledby="h-gallery">
+  <section id="gallery" class="panel" role="tabpanel" aria-labelledby="h-gallery">
     <h2 id="h-gallery">Gallery</h2><div class="rule"></div>
     <p class="intro">Every photo of Micah here, from his Keeper memorial and from everyone who knew him. Add yours; no account needed.</p>
     <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button> <button type="button" class="btn line" id="play-all">Play as a slideshow</button></div>
@@ -319,15 +352,11 @@
     </div>
   </section>
 
-  <section id="loved" aria-labelledby="h-loved">
-    <h2 id="h-loved">Family</h2><div class="rule"></div>
-    <div class="loved" id="loved-list"></div>
-  </section>
 </main>
 
 <footer class="foot">
-  <p id="kept"></p>
-  <a href="card/">Print a card to share</a> · <a href="#">Back to the top</a>
+  <a class="btn light help" id="help" hidden>Get help or make a suggestion</a>
+  <p class="foot-links"><a href="card/">Print a card to share</a> · <a href="#">Back to the top</a></p>
 </footer>
 
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph">
@@ -384,13 +413,13 @@
     ep.querySelector('p').textContent = M.epigraph.text;
     ep.querySelector('cite').textContent = M.epigraph.from;
   }
-  if (M.keepers && M.keepers.length) $('kept').textContent = 'Kept by ' + list(M.keepers) + ', for the family.';
+  if (M.help && M.help.email) { var hb = $('help'); hb.href = 'mailto:' + M.help.email + '?subject=' + encodeURIComponent(M.help.subject || ''); hb.hidden = false; }
 
   /* ---------- his life ---------- */
   // The photos from his Keeper memorial, in story order. Photos the family adds with a year join their era.
   var keeperPhotos = [], galleryRows = [], rows = [];
   M.story.forEach(function (s) { (s.photos || []).forEach(function (p) { keeperPhotos.push({ key: p.src, src: p.src, w: p.w, h: p.h, cap: '' }); }); });
-  var SHOW = 9, opened = {}, storySet = [], storySig = null;
+  var SHOW = Infinity, opened = {}, storySet = [], storySig = null;   // every photo shows, in a filmstrip
   function photoButton(p, set, attr) {
     var b = el('button', 'ph'); b.type = 'button'; b.setAttribute(attr, set.length); set.push(p);
     b.setAttribute('aria-label', (p.cap || 'Photograph') + ', full size');
@@ -424,9 +453,17 @@
       if (photos.length === 1) {
         var one = el('div', 'one'); one.appendChild(photoButton(photos[0], storySet, 'data-s')); li.appendChild(one);
       } else if (photos.length) {
-        var mo = el('div', 'mosaic');
+        var strip = el('div', 'strip');
+        var mo = el('div', 'mosaic'); mo.tabIndex = 0; mo.setAttribute('aria-label', photos.length + ' photographs; scroll sideways');
         photos.forEach(function (p, k) { var b = photoButton(p, storySet, 'data-s'); if (k >= SHOW && !opened[si]) b.hidden = true; mo.appendChild(b); });
-        li.appendChild(mo);
+        strip.appendChild(mo);
+        var back = el('button', 'strip-go back', '‹'), fwd = el('button', 'strip-go fwd', '›');
+        back.type = fwd.type = 'button'; back.setAttribute('aria-label', 'Earlier photos'); fwd.setAttribute('aria-label', 'More photos');
+        back.addEventListener('click', function () { mo.scrollBy({ left: -mo.clientWidth * 0.8, behavior: still.matches ? 'auto' : 'smooth' }); });
+        fwd.addEventListener('click', function () { mo.scrollBy({ left: mo.clientWidth * 0.8, behavior: still.matches ? 'auto' : 'smooth' }); });
+        strip.appendChild(back); strip.appendChild(fwd);
+        li.appendChild(strip);
+        li.appendChild(el('p', 'strip-count label', photos.length + ' photos · swipe or scroll sideways'));
         if (photos.length > SHOW && !opened[si]) {
           var more = el('button', 'more', 'Show all ' + photos.length + ' photos'); more.type = 'button';
           more.addEventListener('click', function () {
@@ -540,6 +577,7 @@
   try { var saved = localStorage.getItem('micah-name'); if (saved) nameEl.value = saved; } catch (e) {}
   function say(t, k) { status.textContent = t; status.className = 'status' + (k ? ' ' + k : ''); }
   function openSign() {
+    selectTab('guestbook', { scroll: false });
     form.hidden = false; $('open-sign').hidden = true;
     form.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
     setTimeout(function () { (nameEl.value ? msgEl : nameEl).focus({ preventScroll: true }); }, 350);
@@ -717,7 +755,7 @@
   function asay(t, k) { aStatus.textContent = t; aStatus.className = 'status' + (k ? ' ' + k : ''); }
   Array.prototype.forEach.call(document.querySelectorAll('[data-add]'), function (b) {
     b.addEventListener('click', function (e) {
-      e.preventDefault(); addForm.hidden = false; $('open-add').hidden = true;
+      e.preventDefault(); selectTab('gallery', { scroll: false }); addForm.hidden = false; $('open-add').hidden = true;
       addForm.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
     });
   });
@@ -827,13 +865,51 @@
     }).then(function () { btn.disabled = false; });
   });
 
-  /* ---------- family ---------- */
-  M.lovedOnes.forEach(function (p) {
-    var d = el('div');
-    d.appendChild(el('p', 'l-name', p.name));
-    if (p.relation) d.appendChild(el('p', 'l-rel label', p.relation));
-    $('loved-list').appendChild(d);
+  /* ---------- tabs: one part at a time, and the address says which ---------- */
+  var TABS = ['story', 'book', 'guestbook', 'gallery'], current = null;
+  function placeInk() {
+    var a = document.querySelector('.nav [aria-selected="true"]'), ink = $('tab-ink'), nav = $('tabs');
+    if (!a) return;
+    ink.style.width = a.offsetWidth + 'px';
+    ink.style.transform = 'translateX(' + (a.offsetLeft - nav.scrollLeft) + 'px)';
+  }
+  function selectTab(id, opts) {
+    if (TABS.indexOf(id) < 0) id = 'story';
+    opts = opts || {};
+    TABS.forEach(function (t) {
+      var on = t === id, panel = $(t), tab = $('tab-' + t);
+      panel.hidden = !on; tab.setAttribute('aria-selected', on ? 'true' : 'false'); tab.tabIndex = on ? 0 : -1;
+    });
+    if (current && current !== id && !still.matches) { var pn = $(id); pn.classList.remove('entering'); void pn.offsetWidth; pn.classList.add('entering'); }
+    current = id;
+    placeInk();
+    if (id === 'book') sizeReader();
+    if (!opts.initial) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
+    // if the reader had scrolled down into the last part, bring them to the top of this one
+    var top = $('tabs').getBoundingClientRect().top + window.pageYOffset;
+    if (opts.scroll !== false && window.pageYOffset > top) window.scrollTo({ top: top, behavior: 'auto' });
+  }
+  $('tabs').addEventListener('click', function (e) {
+    var a = e.target.closest('[data-tab]'); if (!a) return;
+    e.preventDefault(); selectTab(a.getAttribute('data-tab'));
   });
+  $('tabs').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var i = TABS.indexOf(current) + (e.key === 'ArrowRight' ? 1 : -1);
+    i = (i + TABS.length) % TABS.length; selectTab(TABS[i]); $('tab-' + TABS[i]).focus();
+  });
+  $('tabs').addEventListener('scroll', placeInk, { passive: true });
+  window.addEventListener('resize', placeInk);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeInk);
+  // links inside the page (Read the book) and addresses from outside choose a tab
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]'); if (!a || a.hasAttribute('data-tab') || a.hasAttribute('data-sign') || a.hasAttribute('data-add')) return;
+    var id = a.getAttribute('href').slice(1);
+    if (TABS.indexOf(id) >= 0) { e.preventDefault(); selectTab(id); }
+  });
+  window.addEventListener('hashchange', function () { var id = location.hash.slice(1); if (TABS.indexOf(id) >= 0 && id !== current) selectTab(id); });
+  // on arrival the address is left as it was, so the browser doesn't jump down to a tab
+  selectTab(TABS.indexOf(location.hash.slice(1)) >= 0 ? location.hash.slice(1) : 'story', { scroll: false, initial: true });
 
   /* ---------- a photo, full size, with Back and Next, arrows, swipe, Escape, and a slideshow ---------- */
   var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = [], playing = null;

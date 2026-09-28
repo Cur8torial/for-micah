@@ -10,9 +10,6 @@ window.MEMORIAL = {
     "text": "The world must learn to operate on the principles of love rather than fear.",
     "from": "Micah, in I’ve Gripped the Phantom"
   },
-  "keepers": [
-    "Rae"
-  ],
   "story": [
     {
       "when": "June 28, 1986",
@@ -466,32 +463,6 @@ window.MEMORIAL = {
       "What do you want people to know about him?"
     ]
   },
-  "lovedOnes": [
-    {
-      "name": "Debbie Bielert",
-      "relation": "Mother"
-    },
-    {
-      "name": "Dean Bielert",
-      "relation": "Father"
-    },
-    {
-      "name": "Hannah Bielert",
-      "relation": "Sister"
-    },
-    {
-      "name": "Donna Bielert",
-      "relation": "Grandmother"
-    },
-    {
-      "name": "Jim Hamilton",
-      "relation": "Grandfather"
-    },
-    {
-      "name": "Harold Bielert",
-      "relation": "Grandfather"
-    }
-  ],
   "database": {
     "url": "https://ckoysoolddkpvipiwadi.supabase.co",
     "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrb3lzb29sZGRrcHZpcGl3YWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Njc1MTQsImV4cCI6MjEwNjA0MzUxNH0.ztGb7Z7SOkzPHRiLuALI9dpMpOx9joXRYs77pjMzmY0",
@@ -512,5 +483,9 @@ window.MEMORIAL = {
       "text": "Today we remember Micah. Share a memory of him in the guestbook, or add a photo."
     }
   ],
-  "bookPdf": "book/book.pdf"
+  "bookPdf": "book/book.pdf",
+  "help": {
+    "email": "raehamilton130@gmail.com",
+    "subject": "Micah’s page"
+  }
 };
