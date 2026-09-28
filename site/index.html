@@ -610,11 +610,19 @@
     b.addEventListener('click', function (e) { e.preventDefault(); openSign(); });
   });
   var askAt = -1, asked = '';
+  // "Answer a question": each tap adds the next question below what's written, so several can be answered.
+  // A question with nothing written under it yet is swapped for the next one instead.
   $('g-ask').addEventListener('click', function () {
-    askAt = (askAt + 1) % G.questions.length;
-    var q = G.questions[askAt], rest = msgEl.value;
-    if (asked && rest.indexOf(asked) === 0) rest = rest.slice(asked.length).replace(/^\n+/, '');
-    asked = q; msgEl.value = q + '\n\n' + rest;
+    var text = msgEl.value.replace(/\s+$/, '');
+    if (asked && text.slice(-asked.length) === asked) text = text.slice(0, -asked.length).replace(/\s+$/, '');
+    var q = null;
+    for (var tries = 0; tries < G.questions.length; tries++) {
+      askAt = (askAt + 1) % G.questions.length;
+      if (text.indexOf(G.questions[askAt]) < 0) { q = G.questions[askAt]; break; }
+    }
+    if (!q) { asked = ''; msgEl.value = text; msgEl.focus(); return; }   // every question is already here
+    asked = q; msgEl.value = (text ? text + '\n\n' : '') + q + '\n\n';
+    $('g-ask').firstChild.textContent = 'Want to say more? '; $('g-ask').querySelector('b').textContent = 'Answer another question';
     msgEl.focus(); msgEl.setSelectionRange(msgEl.value.length, msgEl.value.length);
   });
   photoEl.addEventListener('change', function () {

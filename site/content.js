@@ -410,7 +410,7 @@ window.MEMORIAL = {
     "title": "I’ve Gripped the Phantom",
     "href": "book/",
     "cover": "book/pages/01.jpg",
-    "about": "A selection of his reflections and poetry, as he posted them from 2017 to 2025, gathered into a book by Rae. 87 pages."
+    "about": "A selection of his reflections and poetry, as he posted them from 2017 to 2025."
   },
   "music": {
     "title": "Music and Lyrics",
