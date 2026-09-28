@@ -1227,9 +1227,13 @@
       var im = el('img'); im.loading = 'lazy'; im.alt = ''; im.src = p.src; b.appendChild(im);
       tGrid.appendChild(b);
     });
+    bulkCount();
+  }
+  // The Save button and the note always name who is being tagged, as it stands in the box now.
+  function bulkCount() {
     var n = bulkChanges().length;
     $('t-save').disabled = !n;
-    $('t-save').textContent = n ? 'Save (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
+    $('t-save').textContent = n ? 'Save for ' + bulkName + ' (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
     $('t-note').textContent = 'Tap every photo ' + bulkName + ' is in. Tap again to take them off. Ticked photos already have them.';
   }
   function chooseBulk() {
@@ -1244,11 +1248,15 @@
     var p = bulkItems[+b.getAttribute('data-bulk')];
     if (bulkOn[p.key]) delete bulkOn[p.key]; else bulkOn[p.key] = true;
     b.setAttribute('aria-pressed', bulkOn[p.key] ? 'true' : 'false');
-    var n = bulkChanges().length;
-    $('t-save').disabled = !n;
-    $('t-save').textContent = n ? 'Save (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
+    bulkCount();
+  });
+  // Still typing after the photos appeared? The name follows the box; the ticks stay as they are.
+  tName.addEventListener('input', function () {
+    if (!bulkName || !tName.value.trim()) return;
+    bulkName = oneSpelling(tName.value); bulkCount();
   });
   $('t-save').addEventListener('click', function () {
+    if (tName.value.trim()) bulkName = oneSpelling(tName.value);
     var list = bulkChanges(); if (!list.length) return;
     $('t-save').disabled = true; tsay('Saving…');
     sendTags(list)
