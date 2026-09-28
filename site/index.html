@@ -212,7 +212,7 @@
   .foot-links a { display: inline-block; margin-top: 10px; font: 400 13px/1 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
 
   /* a photo, full size */
-  .viewer { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; background: rgba(12, 11, 10, 0.97); padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
+  .viewer { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: minmax(0, 1fr) auto auto auto; background: rgba(12, 11, 10, 0.97); padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
   .viewer img { place-self: center; max-width: calc(100vw - 32px); max-height: calc(100% - 32px); object-fit: contain; }
   .v-cap { margin: 0; padding: 6px 20px 0; min-height: 1.6em; text-align: center; font-style: italic; color: var(--on-dark-soft); }
   .gallery { columns: 4 170px; column-gap: 10px; margin-top: 34px; }
@@ -318,6 +318,35 @@
     .hero .name, .hero .epigraph p { color: #000; }
     .e-text.clamped { max-height: none; } .e-text.clamped::after { display: none; }
   }
+
+  /* slideshow settings: speed, transition, and the mural (shown while it plays) */
+  .viewer img#viewer-img, .v-mural { grid-row: 1; grid-column: 1; }
+  .v-opts { display: none; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 22px; padding: 0 16px 16px; }
+  .viewer.is-playing .v-opts { display: flex; }
+  .v-opts .opt { display: flex; align-items: center; gap: 8px; }
+  .v-opts .opt-lab { font: 400 12.5px/1 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-soft); }
+  .v-opts .opt-val { min-width: 6.2em; text-align: center; font: italic 400 18px/1 var(--text); color: var(--on-dark); }
+  .v-opts button, .v-opts select { min-height: 44px; padding: 0 14px; background: none; border: 1px solid var(--line-dark); color: var(--on-dark); cursor: pointer; font: 600 12px/1 var(--ui); letter-spacing: 0.12em; text-transform: uppercase; }
+  .v-opts select { background: #ece9e6; color: #1f1d1a; text-transform: none; letter-spacing: 0.04em; font-size: 15px; font-weight: 400; }
+  .v-opts button[aria-pressed="true"] { background: #ece9e6; color: #1f1d1a; border-color: #ece9e6; }
+  .v-opts button:disabled { opacity: 0.4; cursor: default; }
+  .viewer.fx-fade #viewer-img.fx-in { animation: vfade 1.2s ease; }
+  .viewer.fx-slide #viewer-img.fx-in { animation: vslide 1s cubic-bezier(0.3, 0.1, 0.2, 1); }
+  .viewer.fx-drift #viewer-img.fx-in { animation: vfade 1.4s ease, vdrift var(--hold, 7000ms) linear; }
+  @keyframes vfade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vslide { from { opacity: 0; transform: translateX(6%); } to { opacity: 1; transform: none; } }
+  @keyframes vdrift { from { transform: scale(1); } to { transform: scale(1.06); } }
+  .viewer.is-mural #viewer-img, .viewer.is-mural .v-words, .viewer.is-mural .v-pins { display: none; }
+  .v-mural { place-self: stretch; margin: 16px; display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: 10px; min-height: 0; }
+  .v-mural[hidden] { display: none; }
+  .v-mural .tile { position: relative; overflow: hidden; background: #1f1d1a; }
+  .v-mural .tile img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; object-position: 50% 30%; opacity: 0; transition: opacity 1.4s ease; }
+  .v-mural .tile img.is-in { opacity: 1; }
+  .viewer.fx-slide .v-mural .tile img { transform: translateY(6%); transition: opacity 1s ease, transform 1s ease; }
+  .viewer.fx-slide .v-mural .tile img.is-in { transform: none; }
+  .viewer.fx-drift .v-mural .tile img.is-in { animation: vdrift calc(var(--hold, 7000ms) * 2) linear forwards; }
+  .viewer.fx-none .v-mural .tile img { transition: none; }
+  @media (prefers-reduced-motion: reduce) { #viewer-img.fx-in, .v-mural .tile img { animation: none !important; transition: none !important; transform: none !important; } }
 </style>
 </head>
 <body>
@@ -424,6 +453,7 @@
 
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph">
   <img id="viewer-img" alt="">
+  <div class="v-mural" id="v-mural" hidden></div>
   <div class="v-pins" id="v-pins"></div>
   <form class="v-tagform" id="v-tagform" hidden autocomplete="off">
     <label for="v-name">Who is this?</label>
@@ -449,6 +479,17 @@
     <button type="button" id="v-next">Next</button>
     <button type="button" id="v-play">Play</button>
     <button type="button" id="v-close">Close</button>
+  </div>
+  <div class="v-opts" role="group" aria-label="Slideshow settings">
+    <div class="opt"><span class="opt-lab">Speed</span>
+      <button type="button" id="v-slower" aria-label="Slower: more time on each photo">Slower</button>
+      <span class="opt-val" id="v-speed" aria-live="polite"></span>
+      <button type="button" id="v-faster" aria-label="Faster: less time on each photo">Faster</button></div>
+    <div class="opt"><label class="opt-lab" for="v-fx">Transition</label>
+      <select id="v-fx"><option value="fade">Fade</option><option value="slide">Slide</option><option value="drift">Drift</option><option value="none">None</option></select></div>
+    <div class="opt"><span class="opt-lab">View</span>
+      <button type="button" id="v-one" aria-pressed="true">One at a time</button>
+      <button type="button" id="v-muralbtn" aria-pressed="false">Mural</button></div>
   </div>
 </div>
 
@@ -1016,17 +1057,82 @@
 
   /* ---------- a photo, full size, with Back and Next, arrows, swipe, Escape, and a slideshow ---------- */
   var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = [], playing = null;
+  // How the slideshow plays, chosen under its controls and remembered on this device.
+  var SPEEDS = [4, 5, 7, 10, 15, 20], showPrefs = { hold: 7, fx: 'fade', mural: false };
+  try { var sp = JSON.parse(localStorage.getItem('micah-show') || '{}'); for (var pk in showPrefs) if (pk in sp) showPrefs[pk] = sp[pk]; } catch (e) {}
+  if (SPEEDS.indexOf(showPrefs.hold) < 0) showPrefs.hold = 7;
+  if (['fade', 'slide', 'drift', 'none'].indexOf(showPrefs.fx) < 0) showPrefs.fx = 'fade';
+  function saveShowPrefs() { try { localStorage.setItem('micah-show', JSON.stringify(showPrefs)); } catch (e) {} }
+  function holdMs() { return showPrefs.hold * 1000; }
+  var vMural = $('v-mural'), tiles = [], muralNext = 0, muralLast = -1;
+  function drawOpts() {
+    $('v-speed').textContent = showPrefs.hold + ' seconds';
+    $('v-slower').disabled = showPrefs.hold === SPEEDS[SPEEDS.length - 1];
+    $('v-faster').disabled = showPrefs.hold === SPEEDS[0];
+    $('v-fx').value = showPrefs.fx;
+    $('v-one').setAttribute('aria-pressed', showPrefs.mural ? 'false' : 'true');
+    $('v-muralbtn').setAttribute('aria-pressed', showPrefs.mural ? 'true' : 'false');
+    ['fade', 'slide', 'drift', 'none'].forEach(function (f) { viewer.classList.toggle('fx-' + f, (still.matches ? 'none' : showPrefs.fx) === f); });
+    viewer.style.setProperty('--hold', holdMs() + 'ms');
+    var m = showPrefs.mural && !!playing;
+    viewer.classList.toggle('is-mural', m); vMural.hidden = !m;
+    if (m && !tiles.length) buildMural();
+  }
+  // The mural: a wall of photos where one at a time softly changes.
+  function muralCount() { return Math.min(vset.length, window.matchMedia('(max-width: 700px)').matches ? 4 : 6); }
+  function tileSet(t, k) {
+    var p = vset[k % vset.length], im = document.createElement('img'); im.alt = ''; im.src = p.src; t.appendChild(im);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { im.classList.add('is-in'); }); });
+    var olds = Array.prototype.slice.call(t.querySelectorAll('img')).slice(0, -1);
+    setTimeout(function () { olds.forEach(function (o) { o.remove(); }); }, 1600);
+  }
+  function buildMural() {
+    vMural.textContent = ''; tiles = [];
+    var n = muralCount(); vMural.style.setProperty('--cols', n === 4 ? 2 : 3);
+    for (var i = 0; i < n; i++) { var t = el('div', 'tile'); vMural.appendChild(t); tiles.push(t); tileSet(t, at + i); }
+    muralNext = at + n;
+    $('v-count').textContent = vset.length + ' photos';
+  }
+  function muralStep() {
+    if (!tiles.length) return;
+    var j; do { j = Math.floor(Math.random() * tiles.length); } while (tiles.length > 1 && j === muralLast);
+    muralLast = j; tileSet(tiles[j], muralNext++);
+  }
   function show(i) {
     at = (i + vset.length) % vset.length;
     vImg.src = vset[at].src;
+    vImg.classList.remove('fx-in'); void vImg.offsetWidth; if (playing) vImg.classList.add('fx-in');
     $('v-count').textContent = (at + 1) + ' / ' + vset.length;
     pending = null; placing = null; $('v-capform').hidden = true; $('v-status').textContent = '';
     drawWords();
     var next = vset[(at + 1) % vset.length]; if (next) { var pre = new Image(); pre.src = next.src; }
   }
   function open(i, set) { vset = set; opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
-  function stopPlay() { clearInterval(playing); playing = null; $('v-play').textContent = 'Play'; }
-  function startPlay() { stopPlay(); playing = setInterval(function () { show(at + 1); }, 7000); $('v-play').textContent = 'Pause'; }
+  function stopPlay() {
+    clearInterval(playing); playing = null; $('v-play').textContent = 'Play';
+    vImg.classList.remove('fx-in'); viewer.classList.remove('is-playing');
+    if (showPrefs.mural) { tiles = []; vMural.textContent = ''; show(at); }
+    drawOpts();
+  }
+  function startPlay() {
+    clearInterval(playing);
+    // in the mural a photo changes twice as often, so the wall keeps moving
+    var every = showPrefs.mural ? Math.max(2000, holdMs() / 2) : holdMs();
+    playing = setInterval(function () { if (showPrefs.mural) muralStep(); else show(at + 1); }, every);
+    $('v-play').textContent = 'Pause'; viewer.classList.add('is-playing');
+    drawOpts();
+  }
+  $('v-slower').addEventListener('click', function () { var i = SPEEDS.indexOf(showPrefs.hold); if (i < SPEEDS.length - 1) { showPrefs.hold = SPEEDS[i + 1]; saveShowPrefs(); drawOpts(); if (playing) startPlay(); } });
+  $('v-faster').addEventListener('click', function () { var i = SPEEDS.indexOf(showPrefs.hold); if (i > 0) { showPrefs.hold = SPEEDS[i - 1]; saveShowPrefs(); drawOpts(); if (playing) startPlay(); } });
+  $('v-fx').addEventListener('change', function (e) { showPrefs.fx = e.target.value; saveShowPrefs(); drawOpts(); });
+  function setMural(on) {
+    if (showPrefs.mural === on) return;
+    showPrefs.mural = on; saveShowPrefs(); tiles = []; vMural.textContent = '';
+    if (on && !playing) startPlay(); else if (playing) startPlay(); else drawOpts();
+    if (!on) show(at);
+  }
+  $('v-one').addEventListener('click', function () { setMural(false); });
+  $('v-muralbtn').addEventListener('click', function () { setMural(true); });
   function close() {
     stopPlay(); viewer.hidden = true; document.body.style.overflow = '';
     try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); } catch (e) {}
@@ -1040,8 +1146,8 @@
     try { if (viewer.requestFullscreen) viewer.requestFullscreen().catch(function () {}); } catch (e) {}
   });
   $('v-play').addEventListener('click', function () { if (playing) stopPlay(); else startPlay(); });
-  $('v-prev').addEventListener('click', function () { show(at - 1); if (playing) startPlay(); });
-  $('v-next').addEventListener('click', function () { show(at + 1); if (playing) startPlay(); });
+  $('v-prev').addEventListener('click', function () { if (showPrefs.mural && playing) { muralStep(); startPlay(); return; } show(at - 1); if (playing) startPlay(); });
+  $('v-next').addEventListener('click', function () { if (showPrefs.mural && playing) { muralStep(); startPlay(); return; } show(at + 1); if (playing) startPlay(); });
   $('v-close').addEventListener('click', close);
   viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
   document.addEventListener('fullscreenchange', function () { if (!document.fullscreenElement && playing) stopPlay(); });
