@@ -201,8 +201,8 @@ window.MEMORIAL = {
       }
     },
     {
-      "when": "The later years",
-      "title": "",
+      "when": "",
+      "title": "Return to Canada",
       "photos": [
         {
           "src": "photos/14.jpg",
