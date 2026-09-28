@@ -3,7 +3,7 @@
 usage: python3 scripts/make_pages.py path/to/export.pdf
 
 Export the Canva design "Micah Social Writings" as PDF (Share > Download > PDF Standard),
-run this, check the pages, then copy the PDF to site/book.pdf. Needs PyMuPDF and Pillow.
+run this, check the pages, then copy the PDF to site/book/book.pdf. Needs PyMuPDF and Pillow.
 If the page count changes, update N in site/index.html.
 """
 import json, os, sys
@@ -12,7 +12,7 @@ from PIL import Image
 
 WIDTH = 1800  # longest edge of each page image, in pixels
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.join(HERE, '..', 'site')
+SITE = os.path.join(HERE, '..', 'site', 'book')
 
 
 def main(pdf):
