@@ -220,8 +220,38 @@
   .picked { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .picked img { width: 64px; height: 64px; object-fit: cover; }
   .v-words { text-align: center; padding: 0 20px; }
-  .v-who { margin-top: 2px; min-height: 40px; padding: 0 6px; background: none; border: 0; cursor: pointer; font: italic 400 18px/1.3 var(--text); color: var(--on-dark); text-decoration: underline; text-decoration-color: var(--line-dark); text-underline-offset: 4px; }
-  .v-who.none { color: var(--on-dark-soft); }
+  .v-by { margin: 2px 0 0; font: 400 13px/1.4 var(--ui); letter-spacing: 0.06em; color: var(--on-dark-soft); }
+  .v-by:empty, .v-also:empty, .v-cap:empty, .v-status:empty { display: none; }
+  .v-also { margin: 6px 0 0; font-size: 17px; color: var(--on-dark-soft); }
+  .v-also .lab { font-style: italic; margin-right: 6px; }
+  .v-also button { min-height: 36px; margin: 3px; padding: 0 12px; background: none; border: 1px dashed var(--line-dark); border-radius: 18px; color: var(--on-dark); cursor: pointer; font: 400 16px/1 var(--text); }
+  .v-also button[aria-pressed="true"] { border-style: solid; border-color: var(--on-dark); }
+  .v-hint { margin: 6px 0 0; font-style: italic; color: var(--on-dark); }
+  .v-status { margin: 4px 0 0; font: 400 14px/1.4 var(--ui); color: var(--on-dark-soft); }
+  .v-tools { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 18px; margin-top: 4px; }
+  .v-tools button { min-height: 44px; padding: 0 6px; background: none; border: 0; cursor: pointer; font: 400 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-dark); text-decoration: underline; text-decoration-color: var(--line-dark); text-underline-offset: 5px; }
+  .v-tools button[aria-pressed="true"] { text-decoration-color: var(--on-dark); }
+  .v-capform { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 6px auto 0; max-width: 36em; }
+  .v-capform input { flex: 1 1 16em; min-height: 46px; padding: 6px 12px; background: #f3efe8; border: 0; border-radius: 2px; font: 400 18px var(--text); color: #1f1d1a; }
+  .viewer .btn { min-height: 46px; padding: 0 18px; }
+  .viewer .btn.line { background: none; color: var(--on-dark); border-color: var(--line-dark); }
+  .v-capform .btn:not(.line) { background: #ece9e6; color: #1f1d1a; border-color: #ece9e6; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .v-pins { position: absolute; inset: 0; pointer-events: none; }
+  .pin { position: absolute; transform: translate(-50%, -50%); pointer-events: auto; display: flex; flex-direction: column; align-items: center; }
+  .pin::before { content: ""; width: 26px; height: 26px; border: 2px solid rgba(255, 255, 255, 0.9); border-radius: 50%; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35); }
+  .pin-name { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; padding: 3px 10px; background: rgba(20, 19, 17, 0.82); color: #f3efe8; border-radius: 12px; font: 400 16px/1.2 var(--text); white-space: nowrap; }
+  .pin-x { min-width: 28px; min-height: 28px; margin: -3px -8px -3px 0; background: none; border: 0; color: #f3efe8; cursor: pointer; font: 400 20px/1 var(--ui); }
+  .pin.new::before { border-style: dashed; }
+  .viewer.names-off .pin:not(.new) { opacity: 0; pointer-events: none; }
+  .pin { transition: opacity 0.2s; }
+  .viewer.tagging img { cursor: crosshair; }
+  .v-tagform { position: absolute; z-index: 2; width: min(300px, calc(100vw - 24px)); padding: 12px; background: var(--paper); color: var(--ink); box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7); font-family: var(--ui); font-size: 15px; }
+  .v-tagform label { display: block; margin-bottom: 6px; color: var(--muted); }
+  .v-tagform input { width: 100%; min-height: 46px; padding: 6px 12px; background: var(--field); border: 1px solid #8e866f; border-radius: 2px; font: 400 19px var(--text); color: var(--ink); }
+  .v-row { display: flex; gap: 8px; margin-top: 8px; }
+  .v-tagform .btn { flex: 1; min-height: 46px; padding: 0 10px; }
+  .v-tagform .btn.line { background: none; color: var(--ink); border-color: var(--rule); }
   .today { max-width: 30em; margin: 26px auto 0; padding: 12px 18px; border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); font: italic 400 22px/1.4 var(--display); color: var(--on-dark); }
   .who-filter { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 26px; }
   .who-filter:empty { display: none; }
@@ -236,7 +266,7 @@
   .keep { max-width: 30em; margin: 48px auto 0; padding: 26px 26px 22px; text-align: center; color: var(--ink-soft); background: var(--grain), var(--card); border: 1px solid var(--edge); box-shadow: var(--lift); }
   .keep p { margin: 0 0 14px; }
   .keep .status { margin-top: 12px; }
-  .tagger { width: min(460px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 0; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8); overflow: auto; }
+  .tagger { width: min(880px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 0; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8); overflow: auto; }
   .tagger::backdrop { background: rgba(0, 0, 0, 0.6); }
   .tagger-in { padding: 24px 24px 20px; font-family: var(--ui); font-size: 16px; }
   .tagger h2 { margin: 0 0 14px; text-align: left; font: italic 500 26px/1.2 var(--display); }
@@ -249,7 +279,16 @@
   .t-add { display: flex; gap: 8px; }
   .t-add input { flex: 1; min-height: 48px; padding: 8px 12px; background: var(--field); border: 1px solid #8e866f; border-radius: 2px; font: 400 19px var(--text); color: var(--ink); }
   .t-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
-  .tagger .submit { width: 100%; margin-top: 16px; }
+  .t-add input { min-width: 0; }
+  @media (max-width: 640px) { .t-add { flex-wrap: wrap; } .t-add .btn { width: 100%; } .tagger-in { padding: 18px 16px 20px; } .t-foot { margin: 14px -16px -20px; padding: 12px 16px 16px; } }
+  .t-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; margin-top: 14px; }
+  .t-grid:empty { display: none; }
+  .t-grid button { position: relative; aspect-ratio: 1; padding: 0; border: 3px solid transparent; background: var(--card); cursor: pointer; }
+  .t-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .t-grid button[aria-pressed="true"] { border-color: var(--ink); }
+  .t-grid button[aria-pressed="true"]::after { content: "✓"; position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 16px/26px var(--ui); text-align: center; }
+  .t-foot { position: sticky; bottom: -20px; display: flex; gap: 10px; margin: 14px -24px -20px; padding: 12px 24px 16px; background: var(--paper); border-top: 1px solid var(--rule); }
+  .t-foot .btn { flex: 1; }
   .viewer-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 10px 16px 16px; }
   .viewer-bar button { min-height: 48px; padding: 0 18px; background: none; border: 1px solid var(--line-dark); color: var(--on-dark); cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase; }
   .viewer-bar span { min-width: 72px; text-align: center; font: 400 13px/1 var(--ui); letter-spacing: 0.1em; color: var(--on-dark-soft); font-variant-numeric: tabular-nums; }
@@ -295,8 +334,8 @@
 </header>
 
 <nav class="nav" id="tabs" role="tablist" aria-label="Sections">
-  <a href="#story" role="tab" id="tab-story" aria-controls="story" data-tab="story"><span class="long">His life</span><span class="short">Life</span></a>
   <a href="#book" role="tab" id="tab-book" aria-controls="book" data-tab="book"><span class="long">Words and lyrics</span><span class="short">Words</span></a>
+  <a href="#story" role="tab" id="tab-story" aria-controls="story" data-tab="story"><span class="long">His life</span><span class="short">Life</span></a>
   <a href="#gallery" role="tab" id="tab-gallery" aria-controls="gallery" data-tab="gallery">Gallery</a>
   <a href="#guestbook" role="tab" id="tab-guestbook" aria-controls="guestbook" data-tab="guestbook">Guestbook</a>
   <span class="tab-ink" id="tab-ink" aria-hidden="true"></span>
@@ -346,7 +385,7 @@
   <section id="gallery" class="panel" role="tabpanel" aria-labelledby="h-gallery">
     <h2 id="h-gallery">Gallery</h2><div class="rule"></div>
     <p class="intro">Every photo of Micah here, from his Keeper memorial and from everyone who knew him. Add yours; no account needed.</p>
-    <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button> <button type="button" class="btn line" id="play-all">Play as a slideshow</button></div>
+    <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button> <button type="button" class="btn line" id="play-all">Play as a slideshow</button> <button type="button" class="btn line" id="tag-many">Tag someone in many photos</button></div>
     <form class="sign-form" id="add-form" hidden novalidate>
       <h3>Add your photos</h3>
       <label for="a-name">Your name</label>
@@ -385,7 +424,25 @@
 
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph">
   <img id="viewer-img" alt="">
-  <div class="v-words"><p class="v-cap" id="v-cap"></p><button type="button" class="v-who" id="v-who"></button></div>
+  <div class="v-pins" id="v-pins"></div>
+  <form class="v-tagform" id="v-tagform" hidden autocomplete="off">
+    <label for="v-name">Who is this?</label>
+    <input id="v-name" type="text" maxlength="60" list="t-names">
+    <div class="v-row"><button type="submit" class="btn">Tag</button><button type="button" class="btn line" id="v-tagcancel">Cancel</button></div>
+  </form>
+  <div class="v-words">
+    <p class="v-cap" id="v-cap"></p>
+    <form class="v-capform" id="v-capform" hidden autocomplete="off">
+      <label class="vh" for="v-capin">Caption</label>
+      <input id="v-capin" type="text" maxlength="300">
+      <button type="submit" class="btn">Save</button><button type="button" class="btn line" id="v-capcancel">Cancel</button>
+    </form>
+    <p class="v-by" id="v-by"></p>
+    <p class="v-also" id="v-also"></p>
+    <p class="v-hint" id="v-hint" hidden>Tap someone in the photo to name them. Tap × to take a name off.</p>
+    <div class="v-tools"><button type="button" id="v-tag" aria-pressed="false">Tag people</button><button type="button" id="v-capbtn">Add a caption</button></div>
+    <p class="v-status" id="v-status" role="status" aria-live="polite"></p>
+  </div>
   <div class="viewer-bar">
     <button type="button" id="v-prev">Back</button>
     <span id="v-count"></span>
@@ -396,18 +453,17 @@
 </div>
 
 <dialog class="tagger" id="tagger" aria-labelledby="t-title">
-  <form method="dialog" class="tagger-in" id="tagger-form">
-    <h2 id="t-title">Who is in this photo?</h2>
-    <div class="t-photo"><img id="t-img" alt=""></div>
-    <ul class="t-list" id="t-list"></ul>
-    <label for="t-name">Add someone by name</label>
-    <div class="t-add"><input id="t-name" type="text" maxlength="60" autocomplete="off" list="t-names"><button type="button" class="btn line" id="t-add">Add</button></div>
-    <datalist id="t-names"></datalist>
-    <p class="t-note">Only name people you know. Anyone in the family can add or take off a name.</p>
+  <form method="dialog" class="tagger-in" id="tagger-form" autocomplete="off">
+    <h2 id="t-title">Tag someone in many photos</h2>
+    <label for="t-name">Who?</label>
+    <div class="t-add"><input id="t-name" type="text" maxlength="60" list="t-names"><button type="button" class="btn line" id="t-go">Choose photos</button></div>
+    <p class="t-note" id="t-note">Type a name, then tap every photo they are in. Tap a photo again to take them off it. Only name people you know.</p>
+    <div class="t-grid" id="t-grid"></div>
     <p class="status" id="t-status" role="status" aria-live="polite"></p>
-    <button type="submit" class="btn submit">Done</button>
+    <div class="t-foot"><button type="button" class="btn" id="t-save" disabled>Save</button><button type="submit" class="btn line">Close</button></div>
   </form>
 </dialog>
+<datalist id="t-names"></datalist>
 
 <!-- Netlify reads this form when the site is published; the page sends a copy of each new guestbook entry
      and each batch of photos to it, and Netlify emails the family (set under Forms, Form notifications). -->
@@ -441,12 +497,12 @@
 
   /* ---------- his life ---------- */
   // The photos from his Keeper memorial, in story order. Photos the family adds with a year join their era.
-  var keeperPhotos = [], galleryRows = [], rows = [];
+  var keeperPhotos = [], galleryRows = [], rows = [], capsOn = Object.create(null);   // capsOn: captions the family added (below)
   M.story.forEach(function (s) { (s.photos || []).forEach(function (p) { keeperPhotos.push({ key: p.src, src: p.src, w: p.w, h: p.h, cap: '' }); }); });
   var SHOW = Infinity, opened = {}, storySet = [], storySig = null;   // every photo shows, in a filmstrip
   function photoButton(p, set, attr) {
     var b = el('button', 'ph'); b.type = 'button'; b.setAttribute(attr, set.length); set.push(p);
-    b.setAttribute('aria-label', (p.cap || 'Photograph') + ', full size');
+    b.setAttribute('aria-label', (capOf(p) || p.by || 'Photograph') + ', full size');
     var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; if (p.w) { im.width = p.w; im.height = p.h; } im.src = p.src;
     b.appendChild(im);
     return b;
@@ -688,11 +744,11 @@
   var galleryItems = [], galleryAll = false, GALLERY_SHOW = 24;
   function galleryItem(r) {
     return { key: 'g-' + r.id, at: r.created_at, src: photoUrl(r.photo_path),
-      cap: 'Added by ' + r.name.trim() + (r.year ? ', ' + r.year : '') + (r.caption && r.caption.trim() ? ': ' + r.caption.trim() : '') };
+      by: 'Added by ' + r.name.trim() + (r.year ? ', ' + r.year : ''), cap: (r.caption || '').trim() };
   }
   function everyItem() {
     var added = galleryRows.map(galleryItem);
-    rows.forEach(function (r) { if (r.photo_path) added.push({ key: 'gb-' + r.id, at: r.created_at, src: photoUrl(r.photo_path), cap: 'From ' + r.name.trim() + ', in the guestbook' }); });
+    rows.forEach(function (r) { if (r.photo_path) added.push({ key: 'gb-' + r.id, at: r.created_at, src: photoUrl(r.photo_path), by: 'From ' + r.name.trim() + ', in the guestbook', cap: '' }); });
     added.sort(function (a, b) { return a.at < b.at ? 1 : a.at > b.at ? -1 : 0; });
     return added.concat(keeperPhotos);
   }
@@ -704,19 +760,18 @@
     tagsOn = Object.create(null);
     tagRows.forEach(function (t) {
       var on = tagsOn[t.photo_key] || (tagsOn[t.photo_key] = Object.create(null));
-      if (t.removed) delete on[nkey(t.person)]; else on[nkey(t.person)] = t.person.trim();
+      if (t.removed) delete on[nkey(t.person)]; else on[nkey(t.person)] = { name: t.person.trim(), x: t.x == null ? null : t.x, y: t.y == null ? null : t.y };
     });
   }
-  function namesIn(k) { var on = tagsOn[k] || {}; return Object.keys(on).map(function (x) { return on[x]; }).sort(); }
   function everyone(items) {
     var count = Object.create(null), label = Object.create(null);
-    items.forEach(function (p) { var on = tagsOn[p.key]; if (on) Object.keys(on).forEach(function (k) { count[k] = (count[k] || 0) + 1; label[k] = on[k]; }); });
+    items.forEach(function (p) { var on = tagsOn[p.key]; if (on) Object.keys(on).forEach(function (k) { count[k] = (count[k] || 0) + 1; label[k] = on[k].name; }); });
     return Object.keys(count).map(function (k) { return { k: k, name: label[k], n: count[k] }; })
       .sort(function (a, b) { return b.n - a.n || (a.name < b.name ? -1 : 1); });
   }
   function drawFilter(people) {
     var bar = $('who-filter'); bar.textContent = '';
-    if (!people.length) { bar.appendChild(el('p', 'who-hint', 'Tap a photo, then “Who is here?” to name the people in it. Names gather here, so anyone can see every photo of someone.')); return; }
+    if (!people.length) { bar.appendChild(el('p', 'who-hint', 'Open a photo and tap Tag people, then tap someone to name them. Or tag someone in many photos at once. Names gather here, so anyone can see every photo of someone.')); return; }
     bar.appendChild(el('span', 'lab', 'Show'));
     var all = el('button', 'chip', 'Everyone'); all.type = 'button'; all.setAttribute('data-who', ''); all.setAttribute('aria-pressed', Object.keys(picked).length ? 'false' : 'true');
     bar.appendChild(all);
@@ -756,7 +811,7 @@
     var more = $('gallery-more');
     more.hidden = galleryAll || galleryItems.length <= GALLERY_SHOW;
     more.textContent = 'Show all ' + galleryItems.length + ' photos';
-    if (!viewer.hidden) drawWho();
+    if (!viewer.hidden) drawWords();
   }
   $('gallery-more').addEventListener('click', function () { galleryAll = true; drawGallery(); });
   function loadGallery() {
@@ -770,13 +825,29 @@
       .catch(function () {});
   }
   function loadTags() {
-    return fetch(DB.url + '/rest/v1/' + DB.tagsTable + '?select=id,photo_key,person,removed&order=id.asc', { headers: HEADERS })
+    return fetch(DB.url + '/rest/v1/' + DB.tagsTable + '?select=id,photo_key,person,removed,x,y&order=id.asc', { headers: HEADERS })
       .then(function (r) { if (!r.ok) throw new Error('tags ' + r.status); return r.json(); })
       .then(function (list) {
         var sig = list.length + '|' + (list.length ? list[list.length - 1].id : '');
         if (sig === tagSig) return;
         tagSig = sig; tagRows = list; computeTags(); drawGallery();
-        if (tagger.open && tagging) drawTagger();
+        if (tagger.open && bulkName) drawBulk();
+      })
+      .catch(function () {});
+  }
+
+  // a caption anyone can add or change: append-only, the latest row for each photo wins ('' clears it)
+  var capSig = '';
+  function capOf(p) { return p.key in capsOn ? capsOn[p.key] : (p.cap || ''); }
+  function loadCaps() {
+    return fetch(DB.url + '/rest/v1/' + DB.captionsTable + '?select=id,photo_key,text&order=id.asc', { headers: HEADERS })
+      .then(function (r) { if (!r.ok) throw new Error('captions ' + r.status); return r.json(); })
+      .then(function (list) {
+        var sig = list.length + '|' + (list.length ? list[list.length - 1].id : '');
+        if (sig === capSig) return;
+        capSig = sig; capsOn = Object.create(null);
+        list.forEach(function (r) { capsOn[r.photo_key] = (r.text || '').trim(); });
+        if (!viewer.hidden) drawWords();
       })
       .catch(function () {});
   }
@@ -877,7 +948,7 @@
     btn.disabled = true;
     var jobs = everyItem().map(function (p, i) {
       if (p.key.indexOf('photos/') === 0) return { name: root + 'Photos/' + p.key.slice(7), url: p.src };
-      return { name: root + 'Added by family/' + (p.at || '').slice(0, 10) + ' ' + safeName(p.cap).slice(0, 60) + ' ' + (i + 1) + '.jpg', url: p.src };
+      return { name: root + 'Added by family/' + (p.at || '').slice(0, 10) + ' ' + safeName((p.by || '') + ' ' + capOf(p)).slice(0, 60) + ' ' + (i + 1) + '.jpg', url: p.src };
     });
     if (M.bookPdf) jobs.push({ name: root + safeName(M.book.title) + '.pdf', url: M.bookPdf });
     var files = [{ name: root + 'Guestbook.txt', data: new TextEncoder().encode(guestbookText()) }], missed = 0;
@@ -898,7 +969,7 @@
   });
 
   /* ---------- tabs: one part at a time, and the address says which ---------- */
-  var TABS = ['story', 'book', 'gallery', 'guestbook'], current = null;
+  var TABS = ['book', 'story', 'gallery', 'guestbook'], current = null;
   function placeInk() {
     var a = document.querySelector('.nav [aria-selected="true"]'), ink = $('tab-ink'), nav = $('tabs');
     if (!a) return;
@@ -906,7 +977,7 @@
     ink.style.transform = 'translateX(' + (a.offsetLeft - nav.scrollLeft) + 'px)';
   }
   function selectTab(id, opts) {
-    if (TABS.indexOf(id) < 0) id = 'story';
+    if (TABS.indexOf(id) < 0) id = 'book';
     opts = opts || {};
     TABS.forEach(function (t) {
       var on = t === id, panel = $(t), tab = $('tab-' + t);
@@ -941,22 +1012,16 @@
   });
   window.addEventListener('hashchange', function () { var id = location.hash.slice(1); if (TABS.indexOf(id) >= 0 && id !== current) selectTab(id); });
   // on arrival the address is left as it was, so the browser doesn't jump down to a tab
-  selectTab(TABS.indexOf(location.hash.slice(1)) >= 0 ? location.hash.slice(1) : 'story', { scroll: false, initial: true });
+  selectTab(TABS.indexOf(location.hash.slice(1)) >= 0 ? location.hash.slice(1) : 'book', { scroll: false, initial: true });
 
   /* ---------- a photo, full size, with Back and Next, arrows, swipe, Escape, and a slideshow ---------- */
   var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = [], playing = null;
-  function drawWho() {
-    var p = vset[at], names = p ? namesIn(p.key) : [], w = $('v-who');
-    w.textContent = names.length ? names.join(', ') : 'Who is here?';
-    w.classList.toggle('none', !names.length);
-    w.setAttribute('aria-label', names.length ? 'In this photo: ' + names.join(', ') + '. Change who is named' : 'Say who is in this photo');
-  }
   function show(i) {
     at = (i + vset.length) % vset.length;
     vImg.src = vset[at].src;
-    $('v-cap').textContent = vset[at].cap || '';
     $('v-count').textContent = (at + 1) + ' / ' + vset.length;
-    drawWho();
+    pending = null; placing = null; $('v-capform').hidden = true; $('v-status').textContent = '';
+    drawWords();
     var next = vset[(at + 1) % vset.length]; if (next) { var pre = new Image(); pre.src = next.src; }
   }
   function open(i, set) { vset = set; opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
@@ -978,76 +1043,223 @@
   $('v-prev').addEventListener('click', function () { show(at - 1); if (playing) startPlay(); });
   $('v-next').addEventListener('click', function () { show(at + 1); if (playing) startPlay(); });
   $('v-close').addEventListener('click', close);
-  $('v-who').addEventListener('click', function () { stopPlay(); openTagger(vset[at]); });
-  viewer.addEventListener('click', function (e) { if (e.target === viewer || e.target === vImg) close(); });
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
   document.addEventListener('fullscreenchange', function () { if (!document.fullscreenElement && playing) stopPlay(); });
   document.addEventListener('keydown', function (e) {
     if (viewer.hidden || tagger.open) return;
-    if (e.key === 'Escape') close();
+    if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) {
+      if (e.key === 'Escape') { pending = null; $('v-capform').hidden = true; drawWords(); }
+      return;
+    }
+    if (e.key === 'Escape') { if (tagMode) setTagMode(false); else close(); }
     else if (e.key === 'ArrowRight') { show(at + 1); if (playing) startPlay(); }
     else if (e.key === 'ArrowLeft') { show(at - 1); if (playing) startPlay(); }
   });
   var sx = null;
   viewer.addEventListener('touchstart', function (e) { sx = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
   viewer.addEventListener('touchend', function (e) {
-    if (sx === null) return;
+    if (sx === null || tagMode) return;
     var dx = e.changedTouches[0].clientX - sx; sx = null;
     if (Math.abs(dx) > 50) { show(at + (dx < 0 ? 1 : -1)); if (playing) startPlay(); }
   }, { passive: true });
 
-  // naming the people in a photo
-  var tagger = $('tagger'), tList = $('t-list'), tName = $('t-name'), tStatus = $('t-status'), tagging = null;
-  function tsay(t, k) { tStatus.textContent = t; tStatus.className = 'status' + (k ? ' ' + k : ''); }
-  function openTagger(p) {
-    tagging = p; $('t-img').src = p.src; tName.value = ''; tsay('');
-    drawTagger();
-    if (tagger.showModal) tagger.showModal(); else tagger.setAttribute('open', '');
-  }
-  function drawTagger() {
-    tList.textContent = '';
-    var on = tagsOn[tagging.key] || {};
-    var ks = Object.keys(on).sort(function (a, b) { return on[a] < on[b] ? -1 : 1; });
-    if (!ks.length) tList.appendChild(el('li', 'none', 'No one yet.'));
-    ks.forEach(function (k) {
-      var li = el('li'); li.appendChild(el('span', null, on[k]));
-      var rm = el('button', null, 'Take off'); rm.type = 'button'; rm.setAttribute('data-untag', k); rm.setAttribute('aria-label', 'Take ' + on[k] + ' off this photo');
-      li.appendChild(rm); tList.appendChild(li);
-    });
+  // naming the people in a photo, where they are in it: tap Tag people, then tap a face
+  var tagMode = false, pending = null, placing = null;
+  var vPins = $('v-pins'), vForm = $('v-tagform'), vName = $('v-name');
+  function vsay(t) { $('v-status').textContent = t || ''; }
+  function fillNames() {
     var dl = $('t-names'); dl.textContent = '';
     everyone(everyItem()).forEach(function (x) { var o = el('option'); o.value = x.name; dl.appendChild(o); });
   }
-  function sendTag(person, removed) {
+  // where the picture itself sits inside the <img> box (object-fit: contain)
+  function imgBox() {
+    var r = vImg.getBoundingClientRect(), nw = vImg.naturalWidth, nh = vImg.naturalHeight;
+    if (!nw || !nh || !r.width) return null;
+    var k = Math.min(r.width / nw, r.height / nh), w = nw * k, h = nh * k;
+    return { left: r.left + (r.width - w) / 2, top: r.top + (r.height - h) / 2, w: w, h: h };
+  }
+  function pinAt(box, x, y, cls) {
+    var pin = el('span', 'pin' + (cls ? ' ' + cls : ''));
+    pin.style.left = (box.left + x * box.w) + 'px'; pin.style.top = (box.top + y * box.h) + 'px';
+    return pin;
+  }
+  function drawWords() {
+    var p = vset[at]; if (!p) return;
+    var cap = capOf(p);
+    $('v-cap').textContent = cap;
+    $('v-by').textContent = p.by || '';
+    $('v-capbtn').textContent = cap ? 'Edit the caption' : 'Add a caption';
+    $('v-tag').textContent = tagMode ? 'Done tagging' : 'Tag people';
+    $('v-tag').setAttribute('aria-pressed', tagMode ? 'true' : 'false');
+    $('v-hint').hidden = !tagMode;
+    viewer.classList.toggle('tagging', tagMode);
+    drawPins();
+  }
+  function drawPins() {
+    vPins.textContent = '';
+    var p = vset[at], box = imgBox(), on = (p && tagsOn[p.key]) || {}, loose = [];
+    Object.keys(on).sort(function (a, b) { return on[a].name < on[b].name ? -1 : 1; }).forEach(function (k) {
+      var t = on[k];
+      if (t.x == null || !box) { loose.push(k); return; }
+      var pin = pinAt(box, t.x, t.y), nm = el('span', 'pin-name', t.name);
+      if (tagMode) { var x = el('button', 'pin-x', '×'); x.type = 'button'; x.setAttribute('data-untag', k); x.setAttribute('aria-label', 'Take ' + t.name + ' off this photo'); nm.appendChild(x); }
+      pin.appendChild(nm); vPins.appendChild(pin);
+    });
+    var also = $('v-also'); also.textContent = '';
+    if (loose.length) {
+      if (tagMode) {
+        also.appendChild(el('span', 'lab', 'Named here, not placed yet: tap a name, then tap where they are.'));
+        also.appendChild(el('br'));
+        loose.forEach(function (k) {
+          var c = el('button', null, on[k].name); c.type = 'button'; c.setAttribute('data-place', k); c.setAttribute('aria-pressed', placing === k ? 'true' : 'false');
+          also.appendChild(c);
+          var x = el('button', null, '×'); x.type = 'button'; x.setAttribute('data-untag', k); x.setAttribute('aria-label', 'Take ' + on[k].name + ' off this photo');
+          also.appendChild(x);
+        });
+      } else {
+        also.appendChild(el('span', 'lab', 'Also here:'));
+        also.appendChild(document.createTextNode(loose.map(function (k) { return on[k].name; }).join(', ')));
+      }
+    }
+    vForm.hidden = !(pending && box);
+    if (pending && box) {
+      vPins.appendChild(pinAt(box, pending.x, pending.y, 'new'));
+      var fx = box.left + pending.x * box.w, fy = box.top + pending.y * box.h + 22, fw = Math.min(300, window.innerWidth - 24);
+      vForm.style.left = Math.max(12, Math.min(window.innerWidth - fw - 12, fx - fw / 2)) + 'px';
+      vForm.style.top = Math.min(fy, window.innerHeight - 170) + 'px';
+    }
+  }
+  function setTagMode(on) {
+    tagMode = on; pending = null; placing = null; vsay('');
+    if (on) { stopPlay(); fillNames(); viewer.classList.remove('names-off'); }
+    drawWords();
+  }
+  function sendTags(list) {
     var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
     h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=representation';
-    tsay('Saving…');
-    return fetch(DB.url + '/rest/v1/' + DB.tagsTable, { method: 'POST', headers: h, body: JSON.stringify({ photo_key: tagging.key, person: person, removed: removed }) })
+    return fetch(DB.url + '/rest/v1/' + DB.tagsTable, { method: 'POST', headers: h, body: JSON.stringify(list) })
       .then(function (r) { if (!r.ok) throw new Error('tag'); return r.json(); })
-      .then(function (list) {
-        if (list && list[0]) tagRows.push(list[0]);
-        computeTags(); drawTagger(); drawGallery(); drawWho();
-        tsay(removed ? 'Taken off.' : 'Added.', 'ok');
-      })
-      .catch(function () { tsay('That did not go through. Check your signal and try once more.', 'warn'); });
+      .then(function (rows) { (rows || []).forEach(function (r) { tagRows.push(r); }); computeTags(); drawGallery(); if (!viewer.hidden) drawWords(); });
   }
-  function addTag() {
-    var name = tName.value.trim().replace(/\s+/g, ' ');
-    if (!name) { tName.focus(); return; }
+  function tagOne(p, name, removed, x, y) {
+    vsay('Saving…');
+    return sendTags([{ photo_key: p.key, person: name, removed: removed, x: x == null ? null : x, y: y == null ? null : y }])
+      .then(function () { vsay(removed ? 'Taken off.' : 'Saved.'); })
+      .catch(function () { vsay('That did not go through. Check your signal and try once more.'); });
+  }
+  function oneSpelling(name) {
+    name = name.trim().replace(/\s+/g, ' ');
     var same = everyone(everyItem()).filter(function (x) { return x.k === nkey(name); })[0];
-    if (same) name = same.name;   // one spelling per person
-    if ((tagsOn[tagging.key] || {})[nkey(name)]) { tsay(name + ' is already here.'); return; }
-    tName.value = '';
-    sendTag(name, false);
+    return same ? same.name : name;   // one spelling per person
   }
-  $('t-add').addEventListener('click', addTag);
-  tName.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addTag(); } });
-  tList.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-untag]'); if (!b) return;
-    sendTag((tagsOn[tagging.key] || {})[b.getAttribute('data-untag')], true);
+  vImg.addEventListener('click', function (e) {
+    if (!tagMode) { viewer.classList.toggle('names-off'); return; }
+    var box = imgBox(), p = vset[at]; if (!box || !p) return;
+    var x = (e.clientX - box.left) / box.w, y = (e.clientY - box.top) / box.h;
+    if (x < 0 || x > 1 || y < 0 || y > 1) return;
+    x = Math.round(x * 1000) / 1000; y = Math.round(y * 1000) / 1000;
+    if (placing) { var t = (tagsOn[p.key] || {})[placing]; placing = null; if (t) tagOne(p, t.name, false, x, y); return; }
+    pending = { x: x, y: y }; vName.value = ''; drawPins(); vName.focus();
+  });
+  vForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = vset[at]; if (!p || !pending) return;
+    if (!vName.value.trim()) { vName.focus(); return; }
+    var name = oneSpelling(vName.value), was = (tagsOn[p.key] || {})[nkey(name)], at0 = pending;
+    pending = null; drawPins();
+    if (was && was.x != null && Math.abs(was.x - at0.x) < 0.01 && Math.abs(was.y - at0.y) < 0.01) { vsay(name + ' is already here.'); return; }
+    tagOne(p, name, false, at0.x, at0.y);   // naming someone again moves them to the new place
+  });
+  $('v-tagcancel').addEventListener('click', function () { pending = null; drawPins(); });
+  viewer.addEventListener('click', function (e) {
+    var u = e.target.closest('[data-untag]'), pl = e.target.closest('[data-place]'), p = vset[at]; if (!p) return;
+    if (u) { var t = (tagsOn[p.key] || {})[u.getAttribute('data-untag')]; if (t) tagOne(p, t.name, true); }
+    else if (pl) { var k = pl.getAttribute('data-place'); placing = placing === k ? null : k; drawPins(); }
+  });
+  $('v-tag').addEventListener('click', function () { setTagMode(!tagMode); });
+  vImg.addEventListener('load', drawPins);
+  window.addEventListener('resize', function () { if (!viewer.hidden) drawPins(); });
+
+  // the caption
+  $('v-capbtn').addEventListener('click', function () {
+    var p = vset[at]; if (!p) return;
+    stopPlay(); $('v-capin').value = capOf(p); $('v-capform').hidden = false; $('v-capin').focus();
+  });
+  $('v-capcancel').addEventListener('click', function () { $('v-capform').hidden = true; });
+  $('v-capform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = vset[at]; if (!p) return;
+    var text = $('v-capin').value.trim().replace(/\s+/g, ' ').slice(0, 300);
+    if (text === capOf(p)) { $('v-capform').hidden = true; return; }
+    var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
+    h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=minimal';
+    vsay('Saving…');
+    fetch(DB.url + '/rest/v1/' + DB.captionsTable, { method: 'POST', headers: h, body: JSON.stringify({ photo_key: p.key, text: text }) })
+      .then(function (r) { if (!r.ok) throw new Error('caption'); capsOn[p.key] = text; $('v-capform').hidden = true; drawWords(); vsay(text ? 'Caption saved.' : 'Caption taken off.'); })
+      .catch(function () { vsay('That did not go through. Check your signal and try once more.'); });
   });
 
-  drawGallery(); loadGallery(); loadTags();
-  setInterval(function () { if (!document.hidden) { loadGallery(); loadTags(); } }, 60000);
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) { loadGallery(); loadTags(); } });
+  // the other way round: pick a person, then tap every photo they are in
+  var tagger = $('tagger'), tName = $('t-name'), tGrid = $('t-grid'), tStatus = $('t-status'), bulkName = null, bulkOn = null, bulkItems = [];
+  function tsay(t, k) { tStatus.textContent = t; tStatus.className = 'status' + (k ? ' ' + k : ''); }
+  function openBulk() {
+    bulkName = null; bulkOn = null; tName.value = ''; tGrid.textContent = ''; tsay(''); $('t-save').disabled = true;
+    fillNames();
+    if (tagger.showModal) tagger.showModal(); else tagger.setAttribute('open', '');
+    tName.focus();
+  }
+  function bulkChanges() {
+    var k = nkey(bulkName), list = [];
+    bulkItems.forEach(function (p) {
+      var had = !!(tagsOn[p.key] || {})[k], want = !!bulkOn[p.key];
+      if (had !== want) list.push({ photo_key: p.key, person: bulkName, removed: !want, x: null, y: null });
+    });
+    return list;
+  }
+  function drawBulk() {
+    var k = nkey(bulkName);
+    bulkItems = everyItem();
+    if (!bulkOn) { bulkOn = Object.create(null); bulkItems.forEach(function (p) { if ((tagsOn[p.key] || {})[k]) bulkOn[p.key] = true; }); }
+    tGrid.textContent = '';
+    bulkItems.forEach(function (p, i) {
+      var b = el('button'); b.type = 'button'; b.setAttribute('data-bulk', i); b.setAttribute('aria-pressed', bulkOn[p.key] ? 'true' : 'false');
+      b.setAttribute('aria-label', (capOf(p) || p.by || 'Photograph ' + (i + 1)));
+      var im = el('img'); im.loading = 'lazy'; im.alt = ''; im.src = p.src; b.appendChild(im);
+      tGrid.appendChild(b);
+    });
+    var n = bulkChanges().length;
+    $('t-save').disabled = !n;
+    $('t-save').textContent = n ? 'Save (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
+    $('t-note').textContent = 'Tap every photo ' + bulkName + ' is in. Tap again to take them off. Ticked photos already have them.';
+  }
+  function chooseBulk() {
+    if (!tName.value.trim()) { tName.focus(); return; }
+    bulkName = oneSpelling(tName.value); tName.value = bulkName; bulkOn = null; tsay('');
+    drawBulk();
+  }
+  $('t-go').addEventListener('click', chooseBulk);
+  tName.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); chooseBulk(); } });
+  tGrid.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bulk]'); if (!b) return;
+    var p = bulkItems[+b.getAttribute('data-bulk')];
+    if (bulkOn[p.key]) delete bulkOn[p.key]; else bulkOn[p.key] = true;
+    b.setAttribute('aria-pressed', bulkOn[p.key] ? 'true' : 'false');
+    var n = bulkChanges().length;
+    $('t-save').disabled = !n;
+    $('t-save').textContent = n ? 'Save (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
+  });
+  $('t-save').addEventListener('click', function () {
+    var list = bulkChanges(); if (!list.length) return;
+    $('t-save').disabled = true; tsay('Saving…');
+    sendTags(list)
+      .then(function () { bulkOn = null; drawBulk(); tsay('Saved. ' + bulkName + ' is now in ' + everyItem().filter(function (p) { return (tagsOn[p.key] || {})[nkey(bulkName)]; }).length + ' photos.', 'ok'); })
+      .catch(function () { $('t-save').disabled = false; tsay('That did not go through. Check your signal and try once more.', 'warn'); });
+  });
+  $('tag-many').addEventListener('click', openBulk);
+
+  drawGallery(); loadGallery(); loadTags(); loadCaps();
+  setInterval(function () { if (!document.hidden) { loadGallery(); loadTags(); loadCaps(); } }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) { loadGallery(); loadTags(); loadCaps(); } });
 })();
 </script>
 </body>

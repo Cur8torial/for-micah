@@ -469,7 +469,8 @@ window.MEMORIAL = {
     "table": "micah_guestbook",
     "photoFolder": "micah/",
     "galleryTable": "micah_gallery",
-    "tagsTable": "micah_photo_tags"
+    "tagsTable": "micah_photo_tags",
+    "captionsTable": "micah_photo_captions"
   },
   "days": [
     {

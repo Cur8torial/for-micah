@@ -29,7 +29,8 @@ def main():
     tables = {
         'guestbook.json': '/rest/v1/%s?select=id,created_at,name,relation,message,photo_path&order=created_at.asc' % db['table'],
         'gallery.json': '/rest/v1/%s?select=id,created_at,name,caption,year,photo_path&order=created_at.asc' % db['galleryTable'],
-        'photo_tags.json': '/rest/v1/%s?select=id,created_at,photo_key,person,removed&order=id.asc' % db['tagsTable'],
+        'photo_tags.json': '/rest/v1/%s?select=id,created_at,photo_key,person,removed,x,y&order=id.asc' % db['tagsTable'],
+        'photo_captions.json': '/rest/v1/%s?select=id,created_at,photo_key,text&order=id.asc' % db['captionsTable'],
     }
     rows = {}
     for fname, path in tables.items():
