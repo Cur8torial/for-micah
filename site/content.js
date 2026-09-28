@@ -488,6 +488,7 @@ window.MEMORIAL = {
     "url": "https://ckoysoolddkpvipiwadi.supabase.co",
     "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrb3lzb29sZGRrcHZpcGl3YWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Njc1MTQsImV4cCI6MjEwNjA0MzUxNH0.ztGb7Z7SOkzPHRiLuALI9dpMpOx9joXRYs77pjMzmY0",
     "table": "micah_guestbook",
-    "photoFolder": "micah/"
+    "photoFolder": "micah/",
+    "galleryTable": "micah_gallery"
   }
 };

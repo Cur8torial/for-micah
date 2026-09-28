@@ -58,7 +58,7 @@
   .epigraph { max-width: 30em; margin: 34px auto 0; }
   .epigraph p { margin: 0; font: italic 400 clamp(22px, 3.4vw, 28px)/1.4 var(--display); color: var(--on-dark); text-wrap: balance; }
   .epigraph cite { display: block; margin-top: 10px; font: 400 13px/1.4 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--on-dark-soft); }
-  .hero .sign { margin-top: 30px; }
+  .hero .sign { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
   .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); text-decoration: none; cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.16em; text-transform: uppercase; }
   .btn:hover { background: var(--ink-soft); }
   .btn.light { background: transparent; color: var(--on-dark); border-color: var(--on-dark-soft); }
@@ -76,6 +76,7 @@
   .nav::-webkit-scrollbar { display: none; }
   .nav a { flex: none; display: flex; align-items: center; min-height: 52px; text-decoration: none; font: 400 13px/1 var(--ui); letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-dark-soft); }
   .nav a:hover { color: var(--on-dark); }
+  .nav .short { display: none; }
 
   /* the pages: one long warm gray sheet */
   .sheet { max-width: 960px; margin: 40px auto 0; padding: 8px clamp(20px, 6vw, 76px) 72px; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); }
@@ -138,6 +139,7 @@
   .ask b { color: var(--ink); font-weight: 500; }
   .photo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
   .photo-row .btn { font-size: 12.5px; }
+  .sign-form label.btn { display: inline-flex; margin: 0; color: var(--ink); font-size: 12.5px; }
   .preview { display: flex; align-items: center; gap: 12px; }
   .preview img { width: 64px; height: 64px; object-fit: cover; }
   .preview button { background: none; border: 0; min-height: 44px; cursor: pointer; text-decoration: underline; color: var(--muted); }
@@ -157,8 +159,13 @@
   .foot a { display: inline-block; margin-top: 10px; font: 400 13px/1 var(--ui); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
 
   /* a photo, full size */
-  .viewer { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: minmax(0, 1fr) auto; background: rgba(12, 11, 10, 0.97); padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
+  .viewer { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; background: rgba(12, 11, 10, 0.97); padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
   .viewer img { place-self: center; max-width: calc(100vw - 32px); max-height: calc(100% - 32px); object-fit: contain; }
+  .v-cap { margin: 0; padding: 6px 20px 0; min-height: 1.6em; text-align: center; font-style: italic; color: var(--on-dark-soft); }
+  .gallery { columns: 4 170px; column-gap: 10px; margin-top: 34px; }
+  .gallery .ph { margin-bottom: 10px; }
+  .picked { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .picked img { width: 64px; height: 64px; object-fit: cover; }
   .viewer-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 10px 16px 16px; }
   .viewer-bar button { min-height: 48px; padding: 0 18px; background: none; border: 1px solid var(--line-dark); color: var(--on-dark); cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase; }
   .viewer-bar span { min-width: 72px; text-align: center; font: 400 13px/1 var(--ui); letter-spacing: 0.1em; color: var(--on-dark-soft); font-variant-numeric: tabular-nums; }
@@ -171,13 +178,16 @@
     .moment { padding-left: 22px; }
     .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .entries { columns: 1; }
+    .gallery { columns: 2; column-gap: 8px; }
+    .gallery .ph { margin-bottom: 8px; }
     .entry { padding: 20px 20px 16px; }
     .nav { gap: 0 18px; padding-left: 10px; padding-right: 10px; }
     .nav a { letter-spacing: 0.12em; font-size: 12.5px; }
+    .nav .long { display: none; } .nav .short { display: inline; }
   }
   @media print {
     html, body, .foot { background: #fff; color: #000; }
-    .nav, .btn, .clips, .viewer, .reader, .sign-form, .gb-actions, .more, .e-more, .ask { display: none !important; }
+    .nav, .btn, .clips, .viewer, .reader, .sign-form, .gb-actions, .more, .e-more, .ask, #gallery { display: none !important; }
     .sheet { box-shadow: none; max-width: none; }
     .hero .name, .hero .epigraph p { color: #000; }
     .e-text.clamped { max-height: none; } .e-text.clamped::after { display: none; }
@@ -193,24 +203,24 @@
   <p class="years" id="years"></p>
   <p class="tagline" id="tagline"></p>
   <blockquote class="epigraph" id="epigraph" hidden><p></p><cite></cite></blockquote>
-  <div class="sign"><a class="btn light" href="#guestbook" data-sign>Sign the guestbook</a></div>
+  <div class="sign"><a class="btn light" href="#guestbook" data-sign>Sign the guestbook</a><a class="btn light" href="#gallery" data-add>Add photos</a></div>
 </header>
 
 <nav class="nav" aria-label="Sections">
-  <a href="#story">His story</a>
-  <a href="#book">His words</a>
+  <a href="#story"><span class="long">His life</span><span class="short">Life</span></a>
+  <a href="#book"><span class="long">Words and lyrics</span><span class="short">Words</span></a>
   <a href="#guestbook">Guestbook</a>
-  <a href="#loved">Family</a>
+  <a href="#gallery">Gallery</a>
 </nav>
 
 <main class="sheet">
   <section id="story" aria-labelledby="h-story">
-    <h2 id="h-story">His story</h2><div class="rule"></div>
+    <h2 id="h-story">His life</h2><div class="rule"></div>
     <ol class="story" id="story-list"></ol>
   </section>
 
   <section id="book" aria-labelledby="h-book">
-    <h2 id="h-book">His words</h2><div class="rule"></div>
+    <h2 id="h-book">Words and lyrics</h2><div class="rule"></div>
     <p class="intro" id="book-about"></p>
     <iframe class="reader" id="reader" title="" loading="lazy"></iframe>
     <p class="book-line"><a id="book-open">Open the book on its own page</a></p>
@@ -244,6 +254,30 @@
     <div class="entries" id="entries"></div>
   </section>
 
+  <section id="gallery" aria-labelledby="h-gallery">
+    <h2 id="h-gallery">Gallery</h2><div class="rule"></div>
+    <p class="intro">Every photo of Micah here, from his Keeper memorial and from everyone who knew him. Add yours; no account needed.</p>
+    <div class="gb-actions"><button type="button" class="btn" id="open-add" data-add>Add your photos</button></div>
+    <form class="sign-form" id="add-form" hidden novalidate>
+      <h3>Add your photos</h3>
+      <label for="a-name">Your name</label>
+      <input type="text" id="a-name" maxlength="80" autocomplete="name" required>
+      <div class="photo-row">
+        <input type="file" id="a-photos" class="vh" accept="image/*" multiple>
+        <label for="a-photos" class="btn line">Choose photos</label>
+        <span class="label" id="a-count"></span>
+      </div>
+      <div class="picked" id="a-picked"></div>
+      <label for="a-cap">A few words about them (if you like)</label>
+      <input type="text" id="a-cap" maxlength="500" autocomplete="off">
+      <input type="text" id="a-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="btn submit" id="a-submit">Add to the gallery</button>
+      <p class="status" id="a-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="gallery" id="gallery-grid"></div>
+    <div class="gb-actions"><button type="button" class="more" id="gallery-more" hidden></button></div>
+  </section>
+
   <section id="loved" aria-labelledby="h-loved">
     <h2 id="h-loved">Family</h2><div class="rule"></div>
     <div class="loved" id="loved-list"></div>
@@ -257,6 +291,7 @@
 
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Photograph">
   <img id="viewer-img" alt="">
+  <p class="v-cap" id="v-cap"></p>
   <div class="viewer-bar">
     <button type="button" id="v-prev">Back</button>
     <span id="v-count"></span>
@@ -402,7 +437,7 @@
         var sig = list.map(function (r) { return r.id; }).join(',');
         if (sig === load.sig) return;
         load.sig = sig; rows = list; known = {}; list.forEach(function (r) { known[r.id] = true; });
-        drawEntries();
+        drawEntries(); drawGallery();
       })
       .catch(function () {});
   }
@@ -477,7 +512,7 @@
         body: JSON.stringify({ name: name, relation: relation || null, message: message || null, photo_path: path || null }) })
         .then(function (r) { if (!r.ok) throw new Error('save'); return r.json(); });
     }).then(function (list) {
-      if (list && list[0] && !known[list[0].id]) { known[list[0].id] = true; rows.push(list[0]); load.sig = ''; drawEntries(); }
+      if (list && list[0] && !known[list[0].id]) { known[list[0].id] = true; rows.push(list[0]); load.sig = ''; drawEntries(); drawGallery(); }
       msgEl.value = ''; relEl.value = ''; chosen = null; photoEl.value = ''; $('g-preview').hidden = true;
       say('Thank you. Your words are in the guestbook.', 'ok');
       var last = $('entries').lastElementChild; if (last) last.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'center' });
@@ -485,6 +520,91 @@
       if (err && err.message === 'cant-read') say('This phone can’t open that photo to send it. Try a screenshot of it instead.', 'warn');
       else say('That did not go through. Check your signal and try once more; nothing was lost.', 'warn');
     }).then(function () { submit.disabled = false; });
+  });
+
+  /* ---------- the gallery: everyone's photos, newest first, then the ones from his Keeper memorial ---------- */
+  var galleryRows = [], galleryItems = [], galleryAll = false, GALLERY_SHOW = 24;
+  function drawGallery() {
+    var added = [];
+    galleryRows.forEach(function (r) { added.push({ at: r.created_at, src: photoUrl(r.photo_path), cap: 'Added by ' + r.name.trim() + (r.caption && r.caption.trim() ? ': ' + r.caption.trim() : '') }); });
+    rows.forEach(function (r) { if (r.photo_path) added.push({ at: r.created_at, src: photoUrl(r.photo_path), cap: 'From ' + r.name.trim() + ', in the guestbook' }); });
+    added.sort(function (a, b) { return a.at < b.at ? 1 : a.at > b.at ? -1 : 0; });
+    galleryItems = added.concat(allPhotos.map(function (p) { return { src: p.src, w: p.w, h: p.h, cap: '' }; }));
+    var grid = $('gallery-grid'); grid.textContent = '';
+    galleryItems.forEach(function (p, i) {
+      if (!galleryAll && i >= GALLERY_SHOW) return;
+      var b = el('button', 'ph'); b.type = 'button'; b.setAttribute('data-g', i);
+      b.setAttribute('aria-label', (p.cap || 'Photograph') + ', full size');
+      var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; if (p.w) { im.width = p.w; im.height = p.h; } im.src = p.src;
+      b.appendChild(im); grid.appendChild(b);
+    });
+    var more = $('gallery-more');
+    more.hidden = galleryAll || galleryItems.length <= GALLERY_SHOW;
+    more.textContent = 'Show all ' + galleryItems.length + ' photos';
+  }
+  $('gallery-more').addEventListener('click', function () { galleryAll = true; drawGallery(); });
+  function loadGallery() {
+    return fetch(DB.url + '/rest/v1/' + DB.galleryTable + '?select=id,created_at,name,caption,photo_path&order=created_at.asc', { headers: HEADERS })
+      .then(function (r) { if (!r.ok) throw new Error('gallery ' + r.status); return r.json(); })
+      .then(function (list) {
+        var sig = list.map(function (r) { return r.id; }).join(',');
+        if (sig === loadGallery.sig) return;
+        loadGallery.sig = sig; galleryRows = list; drawGallery();
+      })
+      .catch(function () {});
+  }
+  drawGallery(); loadGallery();
+  setInterval(function () { if (!document.hidden) loadGallery(); }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) loadGallery(); });
+
+  var addForm = $('add-form'), aName = $('a-name'), aPhotos = $('a-photos'), aCap = $('a-cap'), aStatus = $('a-status'), aSubmit = $('a-submit');
+  var picked = [], MAX_AT_ONCE = 20;
+  try { var savedName = localStorage.getItem('micah-name'); if (savedName) aName.value = savedName; } catch (e) {}
+  function asay(t, k) { aStatus.textContent = t; aStatus.className = 'status' + (k ? ' ' + k : ''); }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-add]'), function (b) {
+    b.addEventListener('click', function (e) {
+      e.preventDefault(); addForm.hidden = false; $('open-add').hidden = true;
+      addForm.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+  aPhotos.addEventListener('change', function () {
+    picked = Array.prototype.filter.call(aPhotos.files || [], function (f) { return !f.type || f.type.indexOf('image/') === 0; }).slice(0, MAX_AT_ONCE);
+    var box = $('a-picked'); box.textContent = '';
+    picked.forEach(function (f) { var im = el('img'); im.alt = ''; try { im.src = URL.createObjectURL(f); } catch (e) {} box.appendChild(im); });
+    $('a-count').textContent = picked.length ? picked.length + (picked.length === 1 ? ' photo' : ' photos') : '';
+    asay((aPhotos.files || []).length > MAX_AT_ONCE ? 'That is more than ' + MAX_AT_ONCE + ' at once; the first ' + MAX_AT_ONCE + ' will go in, and you can add more after.' : '');
+  });
+  addForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if ($('a-website').value) return;
+    var name = aName.value.trim(), caption = aCap.value.trim();
+    if (!name) { asay('Add your name so the family knows who shared these.', 'warn'); aName.focus(); return; }
+    if (!picked.length) { asay('Choose a photo or two first.', 'warn'); return; }
+    try { localStorage.setItem('micah-name', name); } catch (err) {}
+    aSubmit.disabled = true;
+    var files = picked.slice(), done = 0, failed = 0;
+    var h = {}; for (var k in HEADERS) h[k] = HEADERS[k];
+    h['Content-Type'] = 'application/json'; h['Prefer'] = 'return=representation';
+    // one at a time, so a phone on a weak signal isn't sending twenty at once
+    files.reduce(function (chain, f, i) {
+      return chain.then(function () {
+        asay('Adding photo ' + (i + 1) + ' of ' + files.length + '…');
+        return shrink(f).then(function (b) { if (!b) throw new Error('cant-read'); return upload(b); })
+          .then(function (path) {
+            return fetch(DB.url + '/rest/v1/' + DB.galleryTable, { method: 'POST', headers: h, body: JSON.stringify({ name: name, caption: caption || null, photo_path: path }) })
+              .then(function (r) { if (!r.ok) throw new Error('save'); return r.json(); });
+          })
+          .then(function (list) { done++; if (list && list[0]) { galleryRows.push(list[0]); loadGallery.sig = ''; } })
+          .catch(function () { failed++; });
+      });
+    }, Promise.resolve()).then(function () {
+      drawGallery();
+      picked = []; aPhotos.value = ''; $('a-picked').textContent = ''; $('a-count').textContent = ''; aCap.value = '';
+      if (!failed) asay('Thank you. ' + (done === 1 ? 'Your photo is' : 'Your ' + done + ' photos are') + ' in the gallery.', 'ok');
+      else if (done) asay(done + ' went in, but ' + failed + ' didn’t. Try those again, or send a screenshot of them instead.', 'warn');
+      else asay('That did not go through. Check your signal and try once more; nothing was lost.', 'warn');
+      if (done) $('gallery-grid').scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'start' });
+    }).then(function () { aSubmit.disabled = false; });
   });
 
   /* ---------- family ---------- */
@@ -496,13 +616,15 @@
   });
 
   /* ---------- a photo, full size, with Back and Next, arrows, swipe and Escape ---------- */
-  var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null;
+  var viewer = $('viewer'), vImg = $('viewer-img'), at = 0, opener = null, vset = allPhotos;
   function show(i) {
-    at = (i + allPhotos.length) % allPhotos.length;
-    vImg.src = allPhotos[at].src;
-    $('v-count').textContent = (at + 1) + ' / ' + allPhotos.length;
+    at = (i + vset.length) % vset.length;
+    vImg.src = vset[at].src;
+    $('v-cap').textContent = vset[at].cap || '';
+    $('v-count').textContent = (at + 1) + ' / ' + vset.length;
   }
-  function open(i) { opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
+  function open(i, set) { vset = set || allPhotos; opener = document.activeElement; show(i); viewer.hidden = false; document.body.style.overflow = 'hidden'; $('v-close').focus(); }
+  $('gallery-grid').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-g'), galleryItems); });
   function close() { viewer.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); }
   $('story-list').addEventListener('click', function (e) { var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-i')); });
   $('v-prev').addEventListener('click', function () { show(at - 1); });
