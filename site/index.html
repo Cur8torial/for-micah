@@ -287,8 +287,10 @@
   .t-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .t-grid button[aria-pressed="true"] { border-color: var(--ink); }
   .t-grid button[aria-pressed="true"]::after { content: "✓"; position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 16px/26px var(--ui); text-align: center; }
-  .t-foot { position: sticky; bottom: -20px; display: flex; gap: 10px; margin: 14px -24px -20px; padding: 12px 24px 16px; background: var(--paper); border-top: 1px solid var(--rule); }
+  /* Save always in view at the foot of the dialog, however far down the photos go */
+  .t-foot { position: sticky; bottom: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; margin: 14px -24px -20px; padding: 12px 24px 16px; background: var(--paper); border-top: 1px solid var(--rule); box-shadow: 0 -10px 18px -12px rgba(0, 0, 0, 0.35); }
   .t-foot .btn { flex: 1; }
+  .t-unsaved { flex: 1 1 100%; margin: 0; font: 500 16px/1.35 var(--ui); color: var(--ink); }
   .viewer-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 10px 16px 16px; }
   .viewer-bar button { min-height: 48px; padding: 0 18px; background: none; border: 1px solid var(--line-dark); color: var(--on-dark); cursor: pointer; font: 600 13px/1 var(--ui); letter-spacing: 0.14em; text-transform: uppercase; }
   .viewer-bar span { min-width: 72px; text-align: center; font: 400 13px/1 var(--ui); letter-spacing: 0.1em; color: var(--on-dark-soft); font-variant-numeric: tabular-nums; }
@@ -501,7 +503,7 @@
     <p class="t-note" id="t-note">Type a name, then tap every photo they are in. Tap a photo again to take them off it. Only name people you know.</p>
     <div class="t-grid" id="t-grid"></div>
     <p class="status" id="t-status" role="status" aria-live="polite"></p>
-    <div class="t-foot"><button type="button" class="btn" id="t-save" disabled>Save</button><button type="submit" class="btn line">Close</button></div>
+    <div class="t-foot"><p class="t-unsaved" id="t-unsaved" role="alert" hidden></p><button type="button" class="btn" id="t-save" disabled>Save</button><button type="button" class="btn line" id="t-close">Close</button></div>
   </form>
 </dialog>
 <datalist id="t-names"></datalist>
@@ -1309,7 +1311,7 @@
   var tagger = $('tagger'), tName = $('t-name'), tGrid = $('t-grid'), tStatus = $('t-status'), bulkName = null, bulkOn = null, bulkItems = [];
   function tsay(t, k) { tStatus.textContent = t; tStatus.className = 'status' + (k ? ' ' + k : ''); }
   function openBulk() {
-    bulkName = null; bulkOn = null; tName.value = ''; tGrid.textContent = ''; tsay(''); $('t-save').disabled = true;
+    bulkName = null; bulkOn = null; tName.value = ''; tGrid.textContent = ''; tsay(''); $('t-save').disabled = true; leaveAsk(false);
     fillNames();
     if (tagger.showModal) tagger.showModal(); else tagger.setAttribute('open', '');
     tName.focus();
@@ -1339,12 +1341,14 @@
   function bulkCount() {
     var n = bulkChanges().length;
     $('t-save').disabled = !n;
-    $('t-save').textContent = n ? 'Save for ' + bulkName + ' (' + n + ' change' + (n > 1 ? 's' : '') + ')' : 'Save';
+    saveLabel(n);
+    if (!n && leaving) leaveAsk(false);
     $('t-note').textContent = 'Tap every photo ' + bulkName + ' is in. Tap again to take them off. Ticked photos already have them.';
   }
   function chooseBulk() {
     if (!tName.value.trim()) { tName.focus(); return; }
-    bulkName = oneSpelling(tName.value); tName.value = bulkName; bulkOn = null; tsay('');
+    var keep = bulkOn && bulkChanges().length;   // unsaved ticks stay; they follow the name in the box
+    bulkName = oneSpelling(tName.value); tName.value = bulkName; if (!keep) bulkOn = null; tsay('');
     drawBulk();
   }
   $('t-go').addEventListener('click', chooseBulk);
@@ -1366,8 +1370,32 @@
     var list = bulkChanges(); if (!list.length) return;
     $('t-save').disabled = true; tsay('Saving…');
     sendTags(list)
-      .then(function () { bulkOn = null; drawBulk(); tsay('Saved. ' + bulkName + ' is now in ' + everyItem().filter(function (p) { return (tagsOn[p.key] || {})[nkey(bulkName)]; }).length + ' photos.', 'ok'); })
+      .then(function () { var go = leaving; bulkOn = null; drawBulk(); if (go) { tagger.close(); return; } tsay('Saved. ' + bulkName + ' is now in ' + everyItem().filter(function (p) { return (tagsOn[p.key] || {})[nkey(bulkName)]; }).length + ' photos.', 'ok'); })
       .catch(function () { $('t-save').disabled = false; tsay('That did not go through. Check your signal and try once more.', 'warn'); });
+  });
+  // Closing with ticks not yet saved asks first, in the dialog: save them, or close without saving.
+  var leaving = false;
+  function leaveAsk(on) {
+    leaving = on;
+    var n = on ? bulkChanges().length : 0;
+    $('t-unsaved').hidden = !on;
+    $('t-unsaved').textContent = on ? n + (n > 1 ? ' changes' : ' change') + ' for ' + bulkName + ' ' + (n > 1 ? 'aren’t' : 'isn’t') + ' saved yet.' : '';
+    $('t-close').textContent = on ? 'Don’t save' : 'Close';
+    saveLabel(bulkName && bulkOn ? bulkChanges().length : 0);
+  }
+  function saveLabel(n) {
+    $('t-save').textContent = leaving ? 'Save them' : n ? 'Save ' + n + ' change' + (n > 1 ? 's' : '') + ' for ' + bulkName : 'Save';
+  }
+  function tryClose() {
+    if (!leaving && bulkName && bulkOn && bulkChanges().length) { leaveAsk(true); $('t-save').focus(); return; }
+    leaveAsk(false); tagger.close();
+  }
+  $('t-close').addEventListener('click', tryClose);
+  // Escape never throws ticks away: it asks the question, or, if it is already showing, puts it away again.
+  tagger.addEventListener('cancel', function (e) {
+    if (!(bulkName && bulkOn && bulkChanges().length)) return;
+    e.preventDefault();
+    if (leaving) leaveAsk(false); else tryClose();
   });
   $('tag-many').addEventListener('click', openBulk);
 
